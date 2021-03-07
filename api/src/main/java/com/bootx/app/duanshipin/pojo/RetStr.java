@@ -25,9 +25,9 @@ public class RetStr {
     private String channelId;
     private String insertAd;
     private String createuser;
-    private String likecnt;
-    private String commentcnt;
-    private String heat;
+    private Long likecnt;
+    private Long commentcnt;
+    private Long heat;
     public void setItemid(String itemid) {
          this.itemid = itemid;
      }
@@ -105,24 +105,24 @@ public class RetStr {
          return createuser;
      }
 
-    public void setLikecnt(String likecnt) {
+    public void setLikecnt(Long likecnt) {
          this.likecnt = likecnt;
      }
-     public String getLikecnt() {
+     public Long getLikecnt() {
          return likecnt;
      }
 
-    public void setCommentcnt(String commentcnt) {
+    public void setCommentcnt(Long commentcnt) {
          this.commentcnt = commentcnt;
      }
-     public String getCommentcnt() {
+     public Long getCommentcnt() {
          return commentcnt;
      }
 
-    public void setHeat(String heat) {
+    public void setHeat(Long heat) {
          this.heat = heat;
      }
-     public String getHeat() {
+     public Long getHeat() {
          return heat;
      }
 

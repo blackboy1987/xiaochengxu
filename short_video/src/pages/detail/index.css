@@ -1,0 +1,16 @@
+.app{
+    background: #ffffff;
+    overflow-y: hidden;
+}
+.app .video{
+    width: 100%;
+}
+.app .content{
+    height: 8000px;
+    overflow-y: auto;
+}
+app .content .title{
+    margin:8px 16px;
+    font-size: 36px;
+}
+

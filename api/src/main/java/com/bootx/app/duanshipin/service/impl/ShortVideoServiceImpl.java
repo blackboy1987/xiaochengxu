@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Service - 素材目录
@@ -47,6 +48,8 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
     private ShortVideoDao shortVideoDao;
     @Resource
     private RedisService redisService;
+
+    private Random RANDOM = new Random();
 
     @Override
     public void sync(Integer start,Integer end){
@@ -74,11 +77,17 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
             }
 
             ShortVideo shortVideo = new ShortVideo();
+            shortVideo.setCommentCount(item.getCommentcnt());
+            shortVideo.setLikeCount(item.getLikecnt());
             shortVideo.setShortVideoChannel(shortVideoChannel);
             shortVideo.setChannelId(shortVideoChannel.getChannelId());
             shortVideo.setTime(item.getTime());
             shortVideo.setVideoId(item.getVideoid());
             shortVideo.setTitle(item.getVideoname());
+            shortVideo.setShareCount(Math.abs(RANDOM.nextLong()));
+            shortVideo.setReadCount(Math.abs(RANDOM.nextLong()));
+            shortVideo.setCommentCount(Math.abs(RANDOM.nextLong()));
+            shortVideo.setLikeCount(Math.abs(RANDOM.nextLong()));
             shortVideo.setVideoImage(item.getVideoimgurl());
             super.save(shortVideo);
             System.out.println(item.getVideoid()+"==============================ok");
@@ -94,7 +103,7 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
 
             }
            new Thread(()->{
-               // upload(shortVideo);
+               upload(shortVideo);
            }).start();
         }
 

@@ -17,13 +17,21 @@ export default () => {
     const [activeTab,setActiveTab] = useState<number>(3);
     const [data,setData] = useState<any[]>([]);
     const [tabs,setTabs] = useState<TabItem[]>([]);
+    const [page,setPage] = useState<number>(1);
 
-    const list =(id: number)=>{
-        setData([]);
+    const list =(id: number,page:number)=>{
+        if(page===1){
+            setData([]);
+        }
         post("short_video/list",{
             categoryId:id,
-        },data=>{
-            setData(data);
+            page:page||1,
+        },res=>{
+            setData([
+                ...data,
+                ...res,
+            ]);
+            setPage(page||1);
         })
     }
 
@@ -35,8 +43,23 @@ export default () => {
 
     usePageEvent('onLoad',()=>{
         category();
-        list(activeTab)
+        list(activeTab,1);
     });
+
+    /**
+     * 分享
+     */
+    usePageEvent("onShareAppMessage",()=>{
+
+    });
+
+    usePageEvent('onReachBottom',()=>{
+        list(activeTab,page+1);
+    })
+
+    usePageEvent('onPullDownRefresh',()=>{
+        list(activeTab,1);
+    })
 
   return (
     <View>
@@ -48,7 +71,7 @@ export default () => {
                             tabs.map(item=>(
                                 <View onClick={()=>{
                                     setActiveTab(item.id);
-                                    list(item.id);
+                                    list(item.id,1);
                                 }} key={item.id} id={`item_${item.id}`} className={classNames('tabs-bar-content-item',activeTab==item.id?'active':'')}><View>{item.name}</View></View>
                             ))
                         }

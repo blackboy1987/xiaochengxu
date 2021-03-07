@@ -25,4 +25,8 @@ public class IndexController {
         pageable.setPageSize(5);
         return Result.success(jdbcTemplate.queryForList("select id,time,title,videoImage from duanshipin_short_video where shortVideoChannel_id="+categoryId+" order by uploadTime desc limit "+(pageable.getPageNumber()-1)*pageable.getPageSize()+","+pageable.getPageSize()));
     }
+    @PostMapping("/detail")
+    public Result detail(Long id){
+        return Result.success(jdbcTemplate.queryForMap("select * from duanshipin_short_video where id="+id));
+    }
 }

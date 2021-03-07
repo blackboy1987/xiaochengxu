@@ -3,7 +3,9 @@ package com.bootx.app.duanshipin.entity;
 import com.bootx.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -37,6 +39,26 @@ public class ShortVideo extends BaseEntity<Long> {
     private Date uploadTime;
 
     private String tags;
+
+    @NotNull
+    @Min(0)
+    @Column(nullable = false)
+    private Long readCount;
+
+    @NotNull
+    @Min(0)
+    @Column(nullable = false)
+    private Long shareCount;
+
+    @NotNull
+    @Min(0)
+    @Column(nullable = false)
+    private Long commentCount;
+
+    @NotNull
+    @Min(0)
+    @Column(nullable = false)
+    private Long likeCount;
 
     public String getVideoId() {
         return videoId;
@@ -132,5 +154,37 @@ public class ShortVideo extends BaseEntity<Long> {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public Long getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Long readCount) {
+        this.readCount = readCount;
+    }
+
+    public Long getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(Long shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    public Long getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
     }
 }
