@@ -1,0 +1,90 @@
+import * as React from 'react';
+import { View, Text, Image,ScrollView } from 'remax/wechat';
+// @ts-ignore
+import classNames from 'classnames';
+import {usePageEvent} from 'remax/macro';
+import './index.css';
+import {useState} from "react";
+import BlankPage from "@/components/BlankPage";
+import {post} from "@/util/wxUtils";
+
+export type TabItem = {
+    id: number;
+    name: string;
+}
+
+export default () => {
+    const [activeTab,setActiveTab] = useState<number>(3);
+    const [data,setData] = useState<any[]>([]);
+    const [tabs,setTabs] = useState<TabItem[]>([]);
+
+    const list =(id: number)=>{
+        setData([]);
+        post("short_video/list",{
+            categoryId:id,
+        },data=>{
+            setData(data);
+        })
+    }
+
+    const category = () =>{
+        post("short_video/category",{},data=>{
+            setTabs(data);
+        })
+    }
+
+    usePageEvent('onLoad',()=>{
+        category();
+        list(activeTab)
+    });
+
+  return (
+    <View>
+        <View className='tabs'>
+            <View className='tabs-bar'>
+                <ScrollView scrollX scrollIntoView={`item_${activeTab-3}`} scrollWithAnimation>
+                    <View className='tabs-bar-content'>
+                        {
+                            tabs.map(item=>(
+                                <View onClick={()=>{
+                                    setActiveTab(item.id);
+                                    list(item.id);
+                                }} key={item.id} id={`item_${item.id}`} className={classNames('tabs-bar-content-item',activeTab==item.id?'active':'')}><View>{item.name}</View></View>
+                            ))
+                        }
+
+                    </View>
+                </ScrollView>
+            </View>
+            <View className='content'>
+                {
+                    data.length<=0 ? (<BlankPage />) : (
+                        <>
+                            {
+                                data.map(video=>(
+                                    <View className="list" key={video.id}>
+                                        <View>
+                                            <View>
+                                                <Text className="video-txt">{video.title}</Text>
+                                            </View>
+                                            <View className="video-link">
+                                                <Image className="video-img" src={video.videoImage} />
+                                                <Text className="play-btn" />
+                                                <Text className="list-video-time">{video.time}</Text>
+                                            </View>
+                                            <View className="video-footer">
+                                                <View className="share-panel">分享</View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                ))
+                            }
+                        </>
+                    )
+                }
+
+            </View>
+        </View>
+    </View>
+  );
+};
