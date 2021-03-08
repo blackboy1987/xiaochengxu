@@ -81,6 +81,7 @@ public class IndexController {
 
         Map<String,Object> data = new HashMap<>();
         data.put("name",app.getAppName());
+        data.put("status",app.getStatus());
         data.put("ads",app.getAds());
         data.put("config",app.getConfig());
         return Result.success(data);

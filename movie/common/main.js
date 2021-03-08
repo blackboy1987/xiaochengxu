@@ -147,7 +147,7 @@ var e = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? func
             n("3079");
             var c = i(n("66fd")), u = i(n("d64e")), l = i(n("a420")), p = r(n("4a78")), s = r(n("0996"));
             c.default.prototype.md5 = l.default, c.default.prototype.db = p, c.default.prototype.api = s, 
-            c.default.prototype.cjurl = "http://localhost:9000/api/v3/", c.default.prototype.mark = "suisui",
+            c.default.prototype.cjurl = "https://www.igomall.xin/api/v3/", c.default.prototype.mark = "suisui",
             c.default.prototype.iv = "eq7U4nDJFMsaZFHC", c.default.prototype.key = "5m0hVqp39zNPd9qL", 
             c.default.prototype.$user_login = !1, c.default.config.productionTip = !1, u.default.mpType = "app", 
             t(new c.default(function(e) {

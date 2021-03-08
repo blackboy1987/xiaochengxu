@@ -99,7 +99,7 @@ export const Game = () => {
      * 1. 判断金币够不够，不够提示体力不足，够进入第2步
      * 2. 判断回答正不正确。
      */
-    if(userInfo.point>siteConfig.config.levelPoint){
+    if(userInfo.point>=siteConfig.config.levelPoint){
       let memo='';
       let type = 0;
       let continuousCount = getStorageSync('continuous') || 0;

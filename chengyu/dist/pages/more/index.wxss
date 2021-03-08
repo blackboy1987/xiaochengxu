@@ -1,0 +1,58 @@
+@import "./../../remax-styles.wxss";
+page {
+    background: #5735b7;
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.wmore {
+    padding: 30rpx;
+}
+
+.wmore .wmoreitem {
+    background-color: #fff;
+    height: 150rpx;
+    border-radius: 20rpx;
+    margin: 30rpx 0;
+}
+
+.wmoreitem .img {
+    width: 80rpx;
+    height: 80rpx;
+    float: left;
+    border-radius: 50%;
+    margin: 30rpx 20rpx 0;
+}
+
+.wmoreitem .wcon {
+    width: 430rpx;
+    float: left;
+    height: 80rpx;
+}
+
+.wmoreitem .wcon .wtitle {
+    color: #000;
+    margin: 30rpx 20rpx 10rpx;
+}
+
+.wmoreitem .wcon .wmiaoshu {
+    color: #ccc;
+    font-size: 26rpx;
+    margin: 0 20rpx 10rpx;
+}
+
+.wmoreitem .wbtm {
+    float: left;
+    background-color: #ed5a5a;
+    border-radius: 20rpx;
+    padding: 15rpx 20rpx;
+    font-size: 26rpx;
+    margin: 40rpx 10rpx 0 0;
+}
+
+.wad {
+    padding: 20rpx;
+}

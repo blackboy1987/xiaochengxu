@@ -20,7 +20,7 @@ public class Member extends BaseEntity<Long> {
     @Column(updatable = false,nullable = false)
     private Long appId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(nullable = false)
     private MemberRank memberRank;

@@ -1,0 +1,149 @@
+@import "./../../remax-styles.wxss";
+page {
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.main {
+    margin-left: 35rpx;
+    margin-right: 35rpx;
+    box-sizing: border-box;
+    padding-bottom: 26rpx;
+}
+
+.wuser {
+    height: 230rpx;
+    background-image: linear-gradient(0deg,#f7b7a5,#fca699);
+    border-radius: 30rpx;
+    margin: 20rpx;
+}
+
+.wusertitle {
+    color: #fff;
+    padding: 30rpx 0 40rpx;
+    font-size: 26rpx;
+}
+
+.w365-list,.wusertitle {
+    text-align: center;
+}
+
+.wlistitem {
+    float: left;
+    background-color: #d5ddf0;
+    margin-left: 20rpx;
+}
+
+.wavatar,.wlistitem {
+    width: 74rpx;
+    height: 74rpx;
+    border-radius: 50%;
+}
+
+.wavatar {
+    margin: 0;
+}
+
+.wlistitem .img {
+    width: 54rpx;
+    height: 54rpx;
+    margin: 10rpx;
+}
+
+.wjinbi {
+    text-align: center;
+    background-color: #fff;
+    color: red;
+    height: 90rpx;
+    line-height: 90rpx;
+    border-radius: 50rpx;
+    width: 95%;
+    margin: 30rpx auto;
+}
+
+.wyaoqing {
+    background-image: linear-gradient(-90deg,#705ade 1%,#a038fe);
+}
+
+.qiandao,.wyaoqing {
+    text-align: center;
+    height: 90rpx;
+    width: 95%;
+    color: #fff;
+    border-radius: 50rpx;
+    line-height: 90rpx;
+    margin: 30rpx auto;
+}
+
+.qiandao {
+    background-image: linear-gradient(90deg,#61cfeb 1%,#3894fe);
+}
+
+.wshiping {
+    width: 95%;
+    height: 90rpx;
+    background-color: #673ab7;
+    line-height: 90rpx;
+    border-radius: 50rpx;
+    text-align: center;
+    margin: 20rpx auto;
+    color: #fff;
+}
+
+.wad {
+    padding: 0 20rpx 20rpx;
+}
+
+.user {
+    background: #fff;
+    border-radius: 30rpx;
+    color: #7056b5;
+    background: linear-gradient(120deg,#fff 62%,#f5ab96 0);
+}
+
+.user-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 24rpx 0 10rpx 30rpx;
+    border-radius: 50%;
+}
+
+.user-avatar1 {
+    width:100rpx;
+    height: 100rpx;
+    padding: 24rpx 0 10rpx 30rpx;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.user-nickname {
+    position: absolute;
+    top: 50rpx;
+    left: 180rpx;
+    max-width: 260rpx;
+    overflow: hidden;
+}
+
+.user-power {
+    position: absolute;
+    top: 43rpx;
+    right: 35rpx;
+    color: #fff;
+    width: 250rpx;
+    text-align: center;
+}
+
+.user-power text {
+    font-size: 45rpx;
+    line-height: 50rpx;
+}
+
+.jinbi-box {
+    background-color: #fff;
+    border-radius: 30rpx;
+    padding: 20rpx 30rpx;
+    margin-top: 30rpx;
+}

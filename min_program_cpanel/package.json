@@ -36,29 +36,35 @@
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": ["prettier --write"]
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 10"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ],
   "dependencies": {
-    "@ant-design/icons": "^4.0.0",
-    "@ant-design/pro-descriptions": "^1.2.0",
-    "@ant-design/pro-form": "^1.3.0",
-    "@ant-design/pro-layout": "^6.9.0",
-    "@ant-design/pro-table": "^2.17.0",
-    "@umijs/plugin-openapi": "^1.0.1",
-    "@umijs/route-utils": "^1.0.33",
-    "antd": "^4.9.4",
+    "@ant-design/icons": "^4.5.0",
+    "@ant-design/pro-descriptions": "^1.6.4",
+    "@ant-design/pro-form": "^1.17.0",
+    "@ant-design/pro-layout": "^6.15.0",
+    "@ant-design/pro-table": "^2.30.4",
+    "@umijs/plugin-openapi": "^1.0.4",
+    "@umijs/route-utils": "^1.0.36",
+    "antd": "^4.13.1",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "moment": "^2.25.3",
     "omit.js": "^2.0.2",
     "qs": "^6.9.0",
-    "react": "^17.0.0",
+    "react": "^17.0.1",
     "react-dev-inspector": "^1.1.1",
-    "react-dom": "^17.0.0",
+    "react-dom": "^17.0.1",
     "react-helmet-async": "^1.0.4",
-    "umi": "^3.2.14",
-    "umi-request": "^1.0.8"
+    "umi": "^3.3.9",
+    "umi-request": "^1.3.5"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",
@@ -94,5 +100,7 @@
     "stylelint": "^13.0.0",
     "typescript": "^4.0.3"
   },
-  "engines": { "node": ">=10.0.0" }
+  "engines": {
+    "node": ">=10.0.0"
+  }
 }
