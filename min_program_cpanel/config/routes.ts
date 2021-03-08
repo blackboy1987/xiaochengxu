@@ -1,4 +1,7 @@
-﻿export default [
+﻿import movie from "./route/movie";
+import answer from "./route/answer";
+
+export default [
   {
     path: '/user',
     layout: false,
@@ -21,6 +24,8 @@
     icon: 'smile',
     component: './Welcome',
   },
+  ...movie,
+  ...answer,
   {
     path: '/admin',
     name: 'admin',
