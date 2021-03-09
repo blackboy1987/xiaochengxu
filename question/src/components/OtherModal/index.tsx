@@ -6,7 +6,6 @@ import './index.css';
 
 export type Status = 'card'|'close'|'empty'|'error'|'right';
 
-const visible= true;
 const status: Status = 'right';
 const addmoney = 0.12;
 const addcardnum = 3;
@@ -17,7 +16,11 @@ const user = {
 const check_code = '12345';
 const banner = true;
 
-const OtherModal = () => {
+export type OtherModalProps = {
+    visible:boolean;
+}
+
+const OtherModal:React.FC<OtherModalProps> = ({visible}) => {
   return (
       <View className={classNames(
           'dialog-mask',

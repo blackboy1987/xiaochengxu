@@ -6,13 +6,16 @@ import './index.css';
 
 export type Status = 'card'|'close'|'empty'|'error'|'right';
 
-const visible= true;
 const rpStatus = 0;
 const time = 3;
 const index_total_money = 1888;
 const addmoney = 3.5;
 
-const RedPackageModal = () => {
+export type RedPackageModalProps = {
+    visible:boolean;
+}
+
+const RedPackageModal:React.FC<RedPackageModalProps> = ({visible}) => {
   return (
       <View className={classNames(
           'dialog-mask',

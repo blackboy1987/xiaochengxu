@@ -5,7 +5,9 @@ const config: AppConfig = {
       'pages/index/index',
     'pages/sign/index',
     'pages/faq/index',
-    'pages/receive/index'
+    'pages/receive/index',
+    'pages/record/index',
+    'pages/cashout/index'
   ],
   window: {
     navigationBarTextStyle: "white",
