@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/sign/index",
+    "pages/faq/index",
+    "pages/receive/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#FF9528",
+    "backgroundColor": "#EEE"
+  }
+}

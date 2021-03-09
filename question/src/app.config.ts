@@ -1,10 +1,16 @@
 import { AppConfig } from "remax/wechat";
 
 const config: AppConfig = {
-  pages: ['pages/index/index'],
+  pages: [
+      'pages/index/index',
+    'pages/sign/index',
+    'pages/faq/index',
+    'pages/receive/index'
+  ],
   window: {
-    navigationBarTitleText: 'Remax Wechat Template With TypeScript',
-    navigationBarBackgroundColor: '#282c34'
+    navigationBarTextStyle: "white",
+    navigationBarBackgroundColor: "#FF9528",
+    backgroundColor: "#EEE",
   }
 };
 
