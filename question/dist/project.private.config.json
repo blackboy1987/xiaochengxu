@@ -17,6 +17,18 @@
           "pathName": "pages/sign/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/record/index",
+          "pathName": "pages/record/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/cashout/index",
+          "pathName": "pages/cashout/index",
+          "query": "",
+          "scene": null
         }
       ]
     }

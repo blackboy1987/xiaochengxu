@@ -839,7 +839,11 @@ module.exports = {
   "pages/faq/index": [
     "onLoad"
   ],
-  "pages/receive/index": []
+  "pages/receive/index": [],
+  "pages/record/index": [
+    "onLoad"
+  ],
+  "pages/cashout/index": []
 },
       appEvents: []
     }

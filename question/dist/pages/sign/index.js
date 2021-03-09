@@ -115,7 +115,7 @@ var sysinfo = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\IdeaProjects\xiaochengxu\question\src\pages\sign\index.entry.js */"./src/pages/sign/index.entry.js");
+module.exports = __webpack_require__(/*! /Users/blackoy/Desktop/xiaochengxu21/question/src/pages/sign/index.entry.js */"./src/pages/sign/index.entry.js");
 
 
 /***/ })

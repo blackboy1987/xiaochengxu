@@ -92,6 +92,7 @@
     hover-stay-time="{{_h.v(i.props['hover-stay-time'])}}"
     hover-stop-propagation="{{_h.v(i.props['hover-stop-propagation'])}}"
     id="{{_h.v(i.props['id'])}}"
+    key="{{_h.v(i.props['key'])}}"
     lang="{{_h.v(i.props['lang'])}}"
     loading="{{_h.v(i.props['loading'])}}"
     open-id="{{_h.v(i.props['open-id'])}}"
@@ -1405,6 +1406,206 @@
   <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
 </block>
   </movable-view>
+</template>
+
+<template name="REMAX_TPL_1_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_2_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_3_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_4_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_5_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_6_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_7_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_8_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_9_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
+</template>
+
+<template name="REMAX_TPL_10_native-ad-index-10fe8cc">
+  <native-ad-index-10fe8cc
+    unitId="{{_h.v(i.props['unitId'])}}"
+  >
+<block wx:for="{{i.children}}" wx:key="*this">
+  <block wx:if="{{i.nodes[item].props['slot']}}">
+    <view slot="{{i.nodes[item].props['slot']}}"
+    >
+      <block wx:for="{{i.nodes[item].children}}" wx:key="*this" wx:for-item="sItem">
+        <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item].nodes[sItem], a: a, tid: tid + 1 }}" />
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <template is="{{'REMAX_TPL_' + (tid + 1) + '_CONTAINER'}}" data="{{i: i.nodes[item], a: a, tid: tid + 1 }}" />
+  </block>
+</block>
+  </native-ad-index-10fe8cc>
 </template>
 
 <template name="REMAX_TPL_1_navigator">
