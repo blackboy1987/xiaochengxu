@@ -1,4 +1,4 @@
-export default [
+const answer = [
   {
     path: '/answer',
     name: '答题小程序',
@@ -36,3 +36,4 @@ export default [
     ],
   },
 ];
+export default answer;

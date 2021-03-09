@@ -1,4 +1,4 @@
-export default [
+const movie = [
   {
     path: '/movie',
     name: '电影小程序',
@@ -11,8 +11,10 @@ export default [
       {
         path: '/movie/ad',
         name: '广告配置',
-        component: './Welcome',
+        component: './setting/ad',
       },
     ],
   },
 ];
+
+export default movie;

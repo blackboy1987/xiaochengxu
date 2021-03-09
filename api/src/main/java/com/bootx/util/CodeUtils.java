@@ -1,5 +1,8 @@
 package com.bootx.util;
 
+import cn.hutool.Hutool;
+import cn.hutool.crypto.SecureUtil;
+
 import java.util.Random;
 
 public final class CodeUtils {
@@ -11,7 +14,7 @@ public final class CodeUtils {
             "U","V","W","X","Y","Z"
     };
 
-    public static final Random RANDOM = new Random();
+    private static final Random RANDOM = new Random();
 
 
     private CodeUtils(){}
@@ -25,4 +28,14 @@ public final class CodeUtils {
         return sb.toString();
     }
 
+
+    public static String getToken(String code){
+        String s = SecureUtil.sha256(code);
+        System.out.println(s);
+        return s;
+    }
+
+    public static void main(String[] args) {
+        getToken(getToken(getCode(12)));
+    }
 }

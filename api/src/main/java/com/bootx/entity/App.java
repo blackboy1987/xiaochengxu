@@ -2,12 +2,18 @@ package com.bootx.entity;
 
 import com.bootx.common.BaseAttributeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +33,8 @@ public class App extends BaseEntity<Long>{
     private String appToken;
 
     @NotNull
-    @Column(nullable = false,updatable = false,unique = true)
+    @Length(max = 18,min = 18)
+    @Column(length = 18,nullable = false,updatable = false,unique = true)
     private String appCode;
 
     @NotNull
@@ -44,6 +51,42 @@ public class App extends BaseEntity<Long>{
     private Integer status;
 
     private String logo;
+
+    @NotEmpty
+    @Column(nullable = false,updatable = false,unique = false)
+    private String username;
+
+    /**
+     * 密码
+     */
+    @NotEmpty(groups = Save.class)
+    @Length(min = 4, max = 20)
+    @Transient
+    private String password;
+
+    /**
+     * 加密密码
+     */
+    @Column(nullable = false)
+    private String encodedPassword;
+
+    /**
+     * 0：成语
+     * 1：电影
+     * 2：短视频
+     * 3：图转文
+     * 4：答题
+     */
+    @NotNull
+    @Column(nullable = false,updatable = false)
+    private Integer type;
+
+    /**
+     * 账号过期时间。
+     */
+    @NotNull
+    @Column(nullable = false)
+    private Date expireDate;
 
     @NotNull
     @Convert(converter = ConfigConfigConvert.class)
@@ -132,6 +175,71 @@ public class App extends BaseEntity<Long>{
 
     public void setConfig(Map<String, String> config) {
         this.config = config;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * 获取密码
+     *
+     * @return 密码
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 设置密码
+     *
+     * @param password
+     *            密码
+     */
+    public void setPassword(String password) {
+        this.password = password;
+        if (password != null) {
+            setEncodedPassword(DigestUtils.md5Hex(password));
+        }
+    }
+
+    /**
+     * 获取加密密码
+     *
+     * @return 加密密码
+     */
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    /**
+     * 设置加密密码
+     *
+     * @param encodedPassword
+     *            加密密码
+     */
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -237,5 +345,10 @@ public class App extends BaseEntity<Long>{
     @Convert
     public static class ConfigConfigConvert extends BaseAttributeConverter<Map<String,String>>{
 
+    }
+
+    @Transient
+    public boolean isValidCredentials(Object credentials) {
+        return credentials != null && StringUtils.equals(DigestUtils.md5Hex(credentials instanceof char[] ? String.valueOf((char[]) credentials) : String.valueOf(credentials)), getEncodedPassword());
     }
 }

@@ -61,7 +61,9 @@ const Login: React.FC = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
+      console.log("msg",msg);
       if (msg.status === 'ok') {
+        localStorage.setItem("token",msg.token);
         message.success('登录成功！');
         await fetchUserInfo();
         goto();
@@ -74,7 +76,7 @@ const Login: React.FC = () => {
     }
     setSubmitting(false);
   };
-  const { status, type: loginType } = userLoginState;
+  const { status, type: loginType,msg } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -134,7 +136,7 @@ const Login: React.FC = () => {
 
             {status === 'error' && loginType === 'account' && (
               <LoginMessage
-                content={intl.formatMessage({
+                content={msg || intl.formatMessage({
                   id: 'pages.login.accountLogin.errorMessage',
                   defaultMessage: '账户或密码错误（admin/ant.design)',
                 })}

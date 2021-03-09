@@ -26,6 +26,8 @@ declare namespace API {
   type LoginResult = {
     status?: string;
     type?: string;
+    msg?: string;
+    token?: string;
     currentAuthority?: string;
   };
 
@@ -98,4 +100,22 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+
+  type ResponseData = {
+    code: number;
+    msg: string;
+    data: any;
+  }
+
+
+  type ResponsePaginationData = {
+    code: number;
+    msg: string;
+    data: {
+      content: string[];
+      pageNumber: number;
+      pageSize: number;
+      total: number;
+    };
+  }
 }

@@ -72,5 +72,8 @@ public class Result {
 	public static Result error(Integer code,String msg) {
 		return new Result(code, msg, null);
 	}
+	public static Result error(Integer code,String msg,Object data) {
+		return new Result(code, msg, data);
+	}
 
 }

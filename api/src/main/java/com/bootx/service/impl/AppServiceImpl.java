@@ -33,6 +33,11 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
     }
 
     @Override
+    public App findByUsername(String username) {
+        return appDao.find("username",username);
+    }
+
+    @Override
     public boolean exist(String appCode, String appSecret) {
         App app = findByAppCode(appCode);
         if(app==null){
@@ -63,6 +68,36 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
             return null;
         }
         return app;
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        return appDao.exists("username",username);
+    }
+
+    @Override
+    public boolean appIdExists(String appId) {
+        return appDao.exists("appId",appId);
+    }
+
+    @Override
+    public boolean appSecretExists(String appSecret) {
+        return appDao.exists("appSecret",appSecret);
+    }
+
+    @Override
+    public boolean appNameExists(String appName) {
+        return appDao.exists("appName",appName);
+    }
+
+    @Override
+    public boolean appCodeExists(String appCode) {
+        return appDao.exists("appCode",appCode);
+    }
+
+    @Override
+    public boolean appTokenExists(String appToken) {
+        return appDao.exists("appToken",appToken);
     }
 
     @Override
