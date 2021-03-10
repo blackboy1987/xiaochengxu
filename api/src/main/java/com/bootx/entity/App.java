@@ -25,7 +25,7 @@ public class App extends BaseEntity<Long>{
     public String appId;
 
     @NotNull
-    @Column(nullable = false,updatable = false,unique = true)
+    @Column(nullable = false,unique = true)
     private String appSecret;
 
     @NotNull
@@ -53,7 +53,7 @@ public class App extends BaseEntity<Long>{
     private String logo;
 
     @NotEmpty
-    @Column(nullable = false,updatable = false,unique = false)
+    @Column(nullable = false,updatable = false,unique = true)
     private String username;
 
     /**

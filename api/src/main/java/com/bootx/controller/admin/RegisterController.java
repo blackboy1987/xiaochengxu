@@ -1,6 +1,7 @@
-package com.bootx.controller;
+package com.bootx.controller.admin;
 
 import com.bootx.common.Result;
+import com.bootx.controller.BaseController;
 import com.bootx.entity.App;
 import com.bootx.entity.BaseEntity;
 import com.bootx.entity.RewardType;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 @RestController("apiRegisterController")
 @RequestMapping("/api/register")
-public class RegisterController extends BaseController{
+public class RegisterController extends BaseController {
 
     @Resource
     private AppService appService;

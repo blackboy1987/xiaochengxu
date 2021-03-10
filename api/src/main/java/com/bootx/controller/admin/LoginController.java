@@ -1,6 +1,7 @@
-package com.bootx.controller;
+package com.bootx.controller.admin;
 
 import com.bootx.common.Result;
+import com.bootx.controller.BaseController;
 import com.bootx.entity.App;
 import com.bootx.entity.BaseEntity;
 import com.bootx.member.entity.Member;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @RestController("apiLoginController")
 @RequestMapping("/api/login")
-public class LoginController extends BaseController{
+public class LoginController extends BaseController {
 
     @Resource
     private AppService appService;

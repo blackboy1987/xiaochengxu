@@ -1,5 +1,6 @@
 ﻿import movie from "./route/movie";
 import answer from "./route/answer";
+import question from "./route/question";
 
 export default [
   {
@@ -31,6 +32,7 @@ export default [
   },
   ...movie,
   ...answer,
+  ...question,
   {
     path: '/admin',
     name: 'admin',

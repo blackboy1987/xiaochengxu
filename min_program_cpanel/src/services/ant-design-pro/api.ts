@@ -1,11 +1,13 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
+import {Constants} from "@/utils/constants";
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<API.CurrentUser>('/api/currentUser', {
-    method: 'GET',
+  return request<API.CurrentUser>(Constants.baseUrl+'currentUser', {
+    method: 'POST',
+    requestType:'form',
     ...(options || {}),
   });
 }

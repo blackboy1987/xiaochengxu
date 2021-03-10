@@ -1,27 +1,37 @@
 import {FooterToolbar, PageContainer} from "@ant-design/pro-layout";
-import {Button, Card, Col, Form, Input, Row} from "antd";
+import {Button, Card, Col, Form, Input, message, Row} from "antd";
+import {useEffect, useState} from "react";
+import {adsUpdate, ads} from "@/pages/setting/service";
 
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 20 },
 };
-
-const ads={
-  "play":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "other":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "feiLei":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "index":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "topic":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "detail":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"},
-  "woDe":{"bannerId":"adunit-a677d814a70242ba","rewardedVideoAdId":"adunit-e9566ae9ffbf6ad8","interstitialAdId":"adunit-d73c982ac406d17a","videoAdId":"adunit-958e71b940f00867","videoFrontAdId":"adunit-03083c87b390182a","gridAdId":"adunit-215747ef06bf81a0","nativeAdId":"adunit-0bf49dd0064f27b1"}};
-
 const Ad=()=>{
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
+  const [loading,setLoading] = useState<boolean>(false);
+  const [form] = Form.useForm();
+
+  useEffect(()=>{
+    ads().then(res=>{
+      form.setFieldsValue(res)
+    });
+  })
+
+  const onFinish = (values: { [key: string]: any }) => {
+    setLoading(true);
+    adsUpdate(values).then(res=>{
+      if(res.code !==0){
+        message.error(res.msg).then();
+      }else{
+        message.success(res.msg).then();
+      }
+      setLoading(false);
+    });
   };
 
   const onFinishFailed = (errorInfo: any) => {
+    setLoading(false);
     console.log('Failed:', errorInfo);
   };
 
@@ -29,6 +39,7 @@ const Ad=()=>{
     <PageContainer title={false}>
 
       <Form
+        form={form}
         {...layout}
         onFinish={onFinish}
         initialValues={ads}
@@ -61,126 +72,126 @@ const Ad=()=>{
             </Card>
           </Col>
           <Col span={12}>
-            <Card size='small' bordered={false} title='分类页广告' style={{marginBottom:24}}>
-              <Form.Item name={['feiLei', 'bannerId']} label='Banner广告' extra='不填不启用'>
+            <Card size='small' bordered={false} title='提现页广告' style={{marginBottom:24}}>
+              <Form.Item name={['tiXian', 'bannerId']} label='Banner广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'videoAdId']} label='视频广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'videoAdId']} label='视频广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'gridAdId']} label='格子广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'gridAdId']} label='格子广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['feiLei', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card size='small' bordered={false} title='专题页广告' style={{marginBottom:24}}>
-              <Form.Item name={['topic', 'bannerId']} label='Banner广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'videoAdId']} label='视频广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'gridAdId']} label='格子广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['topic', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
+              <Form.Item name={['tiXian', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
             </Card>
           </Col>
           <Col span={12}>
-            <Card size='small' bordered={false} title='我的页广告' style={{marginBottom:24}}>
-              <Form.Item name={['wode', 'bannerId']} label='Banner广告' extra='不填不启用'>
+            <Card size='small' bordered={false} title='记录页广告' style={{marginBottom:24}}>
+              <Form.Item name={['jiLu', 'bannerId']} label='Banner广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'videoAdId']} label='视频广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'videoAdId']} label='视频广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'gridAdId']} label='格子广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'gridAdId']} label='格子广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['wode', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card size='small' bordered={false} title='详情页广告' style={{marginBottom:24}}>
-              <Form.Item name={['detail', 'bannerId']} label='Banner广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'videoAdId']} label='视频广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'gridAdId']} label='格子广告' extra='不填不启用'>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['detail', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
+              <Form.Item name={['jiLu', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
             </Card>
           </Col>
           <Col span={12}>
-            <Card size='small' bordered={false} title='播放页广告' style={{marginBottom:24}}>
-              <Form.Item name={['play', 'bannerId']} label='Banner广告' extra='不填不启用'>
+            <Card size='small' bordered={false} title='答题卡页广告' style={{marginBottom:24}}>
+              <Form.Item name={['daTiKa', 'bannerId']} label='Banner广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'videoAdId']} label='视频广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'videoAdId']} label='视频广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'gridAdId']} label='格子广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'gridAdId']} label='格子广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
-              <Form.Item name={['play', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
+              <Form.Item name={['daTiKa', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card size='small' bordered={false} title='签到页广告' style={{marginBottom:24}}>
+              <Form.Item name={['qianDao', 'bannerId']} label='Banner广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'videoAdId']} label='视频广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'gridAdId']} label='格子广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['qianDao', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card size='small' bordered={false} title='好友页广告' style={{marginBottom:24}}>
+              <Form.Item name={['haoYou', 'bannerId']} label='Banner广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'rewardedVideoAdId']} label='激励式广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'interstitialAdId']} label='插屏广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'videoAdId']} label='视频广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'videoFrontAdId']} label='视频贴片广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'gridAdId']} label='格子广告' extra='不填不启用'>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['haoYou', 'nativeAdId']} label='原生模板广告' extra='不填不启用'>
                 <Input />
               </Form.Item>
             </Card>
@@ -212,7 +223,7 @@ const Ad=()=>{
           </Col>
         </Row>
         <FooterToolbar>
-          <Button type="primary" htmlType="submit">保存</Button>
+          <Button type="primary" htmlType="submit" loading={loading}>保存</Button>
         </FooterToolbar>
       </Form>
 

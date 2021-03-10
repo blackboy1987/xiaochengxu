@@ -21,6 +21,8 @@ public interface AppService extends BaseService<App,Long> {
 
     App get(HttpServletRequest request);
 
+    App get1(HttpServletRequest request);
+
     /**
      * 判断用户名是否存在
      *

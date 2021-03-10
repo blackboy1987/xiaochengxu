@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
+import {Constants} from "@/utils/constants";
 
 /** 发送验证码 POST /api/login/captcha */
 export async function getFakeCaptcha(
@@ -30,7 +31,7 @@ export async function outLogin(options?: { [key: string]: any }) {
 
 /** 登录接口 POST /api/login/account */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('http://localhost:9000/api/login/submit', {
+  return request<API.LoginResult>(Constants.baseUrl+'login/submit', {
     method: 'POST',
     data: body,
     requestType:'form',

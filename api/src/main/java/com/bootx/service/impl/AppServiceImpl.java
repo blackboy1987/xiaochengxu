@@ -5,7 +5,10 @@ import com.bootx.common.Page;
 import com.bootx.common.Pageable;
 import com.bootx.dao.AppDao;
 import com.bootx.entity.App;
+import com.bootx.member.entity.Member;
 import com.bootx.service.AppService;
+import com.bootx.util.JWTUtils;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,5 +124,23 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
     @Override
     public Map<String, Object> findJdbc(Long id) {
         return null;
+    }
+
+
+    @Override
+    public App get1(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if(StringUtils.isBlank(token)){
+            token = request.getParameter("token");
+        }
+        try {
+            Claims claims = JWTUtils.parseToken(token);
+            String id = claims.getId();
+            return super.find(Long.valueOf(id));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }

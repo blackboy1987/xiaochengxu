@@ -137,5 +137,8 @@ const errorHandler = (error: ResponseError) => {
 
 // https://umijs.org/zh-CN/plugins/plugin-request
 export const request: RequestConfig = {
+  headers:{
+    'token':localStorage.getItem("token"),
+  },
   errorHandler,
 };

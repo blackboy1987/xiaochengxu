@@ -16,7 +16,7 @@ import java.util.Date;
  * @author bootx Team
  * @version 6.1
  */
-@ControllerAdvice("com.bootx.controller")
+@ControllerAdvice("com.bootx.**.controller")
 public class BaseControllerAdvice {
 
 	/**
