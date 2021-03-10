@@ -834,12 +834,17 @@ module.exports = {
   }
 },
       pageEvents: {
-  "pages/index/index": [],
+  "pages/index/index": [
+    "onLoad"
+  ],
   "pages/sign/index": [],
   "pages/faq/index": [
     "onLoad"
   ],
-  "pages/receive/index": [],
+  "pages/receive/index": [
+    "onLoad",
+    "onShareAppMessage"
+  ],
   "pages/record/index": [
     "onLoad"
   ],

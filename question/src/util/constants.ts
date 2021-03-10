@@ -2,8 +2,8 @@ import {UserInfo} from "@/data";
 
 export const constants = {
     baseUrl:'http://localhost:9000/api/',
-    appCode: 'IEC3OARSJZAB4SG3TU',
-    appToken:'fcb1123588b8c311c661e2e2f6bff63195fb1932809403507e67044dfadaf741',
+    appCode: 'IEC3OARSJZAB4SG3YX',
+    appToken:'yxb1123588b8c311c661e2e2f6bff63195fb1932809403507e67044dfadaf741',
     siteInfo:{
         name:'天天成语闯关',
         bannerAdId:'adunit-5d392fcce4af1bf9',
@@ -36,6 +36,7 @@ export const defaultUserInfo:UserInfo = {
     level:0,
     isSign:false,
     reviewRewardedVideoAdCount:0,
+    totalRight:0,
 }
 
 export const defaultSiteConfig = {

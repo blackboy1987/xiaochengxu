@@ -77,10 +77,10 @@ export const post = (url:string,data:{[key:string]:any},callback:(response:any)=
     })
 }
 
-export const userLogin=(callback?:(res:any)=>void )=>{
+export const userLogin=(params?:{[key:string]:any},callback?:(res:any)=>void )=>{
     login().then(res=>{
         if(res.code){
-            post("login",{code:res.code},data=>{
+            post("login",{...params,code:res.code},data=>{
                 if(callback){
                     callback(data);
                 }
@@ -182,4 +182,20 @@ export const rewardedVideoAdShow1=(rewardedVideoAd:WechatMiniprogram.RewardedVid
                 })
         })
     }
+}
+
+export const setMyInterval=(intervalRef:{
+    current?:NodeJS.Timeout,
+},interval: number,callback?:()=>void)=>{
+    intervalRef.current = setInterval(()=>{
+        console.log("===============================")
+        callback&&callback();
+    },interval);
+}
+
+export const clearMyInterval=(intervalRef:{
+    current:NodeJS.Timeout,
+},callback?:()=>void)=>{
+    callback&&callback();
+    clearInterval(intervalRef.current);
 }

@@ -1,12 +1,16 @@
 package com.bootx.member.entity;
 
+import com.bootx.common.BaseAttributeConverter;
 import com.bootx.entity.BaseEntity;
+import org.bouncycastle.jcajce.provider.digest.MD2;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -78,6 +82,11 @@ public class Member extends BaseEntity<Long> {
     @NotNull
     @Column(nullable = false)
     private Integer level;
+
+    @NotNull
+    @Convert(converter = ConfigConfigConvert.class)
+    @Column(length = 3000,nullable = false)
+    private Map<String,String> config = new HashMap<>();
 
     public String getOpenId() {
         return openId;
@@ -237,5 +246,18 @@ public class Member extends BaseEntity<Long> {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Map<String, String> getConfig() {
+        return config;
+    }
+
+    public void setConfig(Map<String, String> config) {
+        this.config = config;
+    }
+
+    @Convert
+    public static class ConfigConfigConvert extends BaseAttributeConverter<Map<String,String>> {
+
     }
 }

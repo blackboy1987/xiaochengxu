@@ -4,15 +4,18 @@ import com.bootx.app.question.entity.Subject;
 import com.bootx.app.question.pojo.JsonRootBean;
 import com.bootx.app.question.pojo.Question;
 import com.bootx.app.question.service.SubjectService;
+import com.bootx.service.RedisService;
 import com.bootx.util.JsonUtils;
 import com.bootx.util.WebUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.*;
 
 @RestController("apiQuestionInitController")
 @RequestMapping("/api/question")
@@ -22,7 +25,24 @@ public class InitController {
     private SubjectService subjectService;
 
     @Resource
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisService redisService;
+    @Resource
+    private RedisTemplate redisTemplate;
+
+
+    @GetMapping("/cache")
+    public String cache(){
+        List<Subject> all = subjectService.findAll();
+        all.stream().forEach(item->{
+            Map<String,Object> map = new HashMap<>();
+            map.put("title",item.getTitle());
+            map.put("image",item.getImage());
+            map.put("answers",item.getAnswers());
+            redisTemplate.opsForValue().set("question_"+item.getLevel(),map);
+        });
+
+        return "ok";
+    }
 
 
     @GetMapping("/init")
@@ -44,7 +64,7 @@ public class InitController {
         JsonRootBean jsonRootBean = JsonUtils.toObject(s,JsonRootBean.class);
         Question question = jsonRootBean.getQuestion();
         com.bootx.app.question.entity.Subject subject = new com.bootx.app.question.entity.Subject();
-        Boolean aBoolean = stringRedisTemplate.hasKey(question.getTitle());
+        Boolean aBoolean = redisService.hasKey(question.getTitle());
         if(aBoolean){
             return;
         }
@@ -62,9 +82,15 @@ public class InitController {
         });
         try {
             new Thread(()->{
+                String subject_count = redisService.get("subject_count");
+                if(StringUtils.isBlank(subject_count)){
+                    subject_count = "0";
+                }
+                subject.setLevel(Integer.valueOf(subject_count));
+                redisService.set("subject_count",(subject.getLevel()+1)+"");
                 subjectService.save(subject);
                 System.out.println("===================================================================================================================="+subject.getTitle());
-                stringRedisTemplate.opsForValue().set(subject.getTitle(),subject.getTitle());
+                redisService.set(subject.getTitle(),subject.getTitle());
             }).start();
         }catch (Exception ignored){
         }

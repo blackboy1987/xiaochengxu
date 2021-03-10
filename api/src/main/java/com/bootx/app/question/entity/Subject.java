@@ -5,7 +5,9 @@ import com.bootx.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,11 @@ public class Subject extends BaseEntity<Long> {
     private String title;
 
     private String image;
+
+    @NotNull
+    @Min(0)
+    @Column(nullable = false,unique = true)
+    private Integer level;
 
     @NotEmpty
     @Column(length = 1000,nullable = false)
@@ -39,6 +46,14 @@ public class Subject extends BaseEntity<Long> {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public List<Answer> getAnswers() {

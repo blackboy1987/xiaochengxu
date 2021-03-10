@@ -8,4 +8,6 @@ public interface RedisService {
 
     Boolean remove(String key);
 
+    boolean hasKey(String key);
+
 }

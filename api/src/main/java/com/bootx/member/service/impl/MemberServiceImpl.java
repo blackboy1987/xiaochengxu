@@ -151,6 +151,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 		data.put("user_id",member.getId());
 		data.put("level",member.getLevel());
 		data.put("reviewRewardedVideoAdCount", countPointLog(new Date(), member, PointLog.Type.reviewRewardedVideoAd));
+		data.putAll(member.getConfig());
 		data.put("isSign", countPointLog(new Date(), member, PointLog.Type.sign)>0);
 
 		return data;

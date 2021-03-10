@@ -26374,6 +26374,278 @@ module.exports = function (module) {
   return module;
 };
 
+/***/ }),
+
+/***/ "./src/util/constants.ts":
+/*!*******************************!*\
+  !*** ./src/util/constants.ts ***!
+  \*******************************/
+/*! exports provided: constants, defaultUserInfo, defaultSiteConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "constants", function() { return constants; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultUserInfo", function() { return defaultUserInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultSiteConfig", function() { return defaultSiteConfig; });
+var constants = {
+  baseUrl: 'http://localhost:9000/api/',
+  appCode: 'IEC3OARSJZAB4SG3YX',
+  appToken: 'yxb1123588b8c311c661e2e2f6bff63195fb1932809403507e67044dfadaf741',
+  siteInfo: {
+    name: '天天成语闯关',
+    bannerAdId: 'adunit-5d392fcce4af1bf9',
+    rewardedVideoAdId: 'adunit-18e594b5d4fabe3c',
+    interstitialAdId: 'adunit-f83096676f1a1054',
+    videoAdId: 'adunit-1f98f08e663fa1b7',
+    videoFrontAdId: 'adunit-1eefa901f0b541e0',
+    gridAdId: 'adunit-177ef912ea58ca3e',
+    nativeAdId: 'adunit-4088233b68c4f746',
+    per_video_gold: 2000,
+    data: {
+      qiandao: 200
+    },
+    invite_button_text: '邀请新新用户领2000金币',
+    invite_text: '邀请领红包好友'
+  }
+};
+var defaultUserInfo = {
+  id: 0,
+  token: '',
+  balance: 0,
+  amount: 0,
+  point: 0,
+  avatarUrl: '',
+  rankName: '',
+  nickName: '',
+  isAuth: '',
+  user_id: '',
+  level: 0,
+  isSign: false,
+  reviewRewardedVideoAdCount: 0,
+  totalRight: 0
+};
+var defaultSiteConfig = {
+  name: '',
+  status: 1,
+  config: {
+    levelPoint: 100,
+    signPoint: 300,
+    perVideoGold: 1000,
+    inviteButtonText: '邀请新用户领取2000金币',
+    inviteText: '邀请领红包好友',
+    dayRewardedVideoAdCount: 5,
+    rewardedVideoAdInterval: 0,
+    redPackage: ''
+  }
+};
+
+/***/ }),
+
+/***/ "./src/util/wxUtils.ts":
+/*!*****************************!*\
+  !*** ./src/util/wxUtils.ts ***!
+  \*****************************/
+/*! exports provided: getMenuButtonBoundingClientRect, getSystemInfo, getStorage, setStorage, themeMode, post, userLogin, getUserInfo, siteInfo, interstitialAdCreate1, rewardedVideoAdCreate1, rewardedVideoAdShow1, setMyInterval, clearMyInterval */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMenuButtonBoundingClientRect", function() { return getMenuButtonBoundingClientRect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSystemInfo", function() { return getSystemInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStorage", function() { return getStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStorage", function() { return setStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themeMode", function() { return themeMode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "post", function() { return post; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userLogin", function() { return userLogin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserInfo", function() { return getUserInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "siteInfo", function() { return siteInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "interstitialAdCreate1", function() { return interstitialAdCreate1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rewardedVideoAdCreate1", function() { return rewardedVideoAdCreate1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rewardedVideoAdShow1", function() { return rewardedVideoAdShow1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setMyInterval", function() { return setMyInterval; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearMyInterval", function() { return clearMyInterval; });
+/* harmony import */ var remax_wechat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! remax/wechat */ "./node_modules/remax/wechat.js");
+/* harmony import */ var _util_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/util/constants */ "./src/util/constants.ts");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/**
+ * 获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点。
+ */
+
+var getMenuButtonBoundingClientRect = function getMenuButtonBoundingClientRect() {
+  return wx.getMenuButtonBoundingClientRect();
+};
+var getSystemInfo = function getSystemInfo() {
+  return wx.getSystemInfoSync();
+};
+var getStorage = function getStorage(key) {
+  if (!key) {
+    return null;
+  }
+
+  return wx.getStorageSync(key);
+};
+var setStorage = function setStorage(key, value) {
+  wx.setStorageSync(key, value);
+};
+var themeMode = function themeMode() {
+  var themeMode = getStorage("themeMode");
+
+  if (themeMode) {
+    return themeMode;
+  }
+
+  return "white";
+};
+var post = function post(url, data, callback) {
+  Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["request"])({
+    url: url.indexOf('http') === 0 ? url : _util_constants__WEBPACK_IMPORTED_MODULE_1__["constants"].baseUrl + url,
+    header: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "token": getStorage("token"),
+      "appCode": _util_constants__WEBPACK_IMPORTED_MODULE_1__["constants"].appCode,
+      "appToken": _util_constants__WEBPACK_IMPORTED_MODULE_1__["constants"].appToken
+    },
+    data: data,
+    method: 'POST'
+  }).then(function (response) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      var _data = response.data;
+
+      if (_data.code === 0) {
+        callback && callback(_data.data);
+      } else {
+        Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["showToast"])({
+          title: _data.msg,
+          icon: 'none',
+          duration: 5000,
+          mask: true
+        }).then();
+      }
+    } else {
+      Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["showToast"])({
+        title: data.msg,
+        icon: 'none',
+        duration: 5000,
+        mask: true
+      }).then();
+    }
+  }).catch(function (err) {});
+};
+var userLogin = function userLogin(params, callback) {
+  Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["login"])().then(function (res) {
+    if (res.code) {
+      post("login", _objectSpread(_objectSpread({}, params), {}, {
+        code: res.code
+      }), function (data) {
+        if (callback) {
+          callback(data);
+        }
+
+        if (data.userInfo) {
+          setStorage('reviewRewardedVideoAdCount', data.userInfo.reviewRewardedVideoAdCount || 0);
+          setStorage("userInfo", data.userInfo);
+        }
+
+        if (data.token) {
+          setStorage('token', data.token);
+        }
+      });
+    }
+  });
+};
+var getUserInfo = function getUserInfo(callback) {
+  post("userInfo", {}, function (data) {
+    if (callback) {
+      callback(data);
+    }
+
+    if (data) {
+      setStorage('reviewRewardedVideoAdCount', data.reviewRewardedVideoAdCount || 0);
+      setStorage("userInfo", data);
+    }
+  });
+};
+var siteInfo = function siteInfo(callback) {
+  post("site", {}, function (data) {
+    setStorage("siteInfo", data);
+
+    if (callback) {
+      callback(data);
+    }
+  });
+};
+var rewardedVideoAd;
+var interstitialAd;
+var interstitialAdCreate1 = function interstitialAdCreate1(adUnitId, callback) {
+  interstitialAd = Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["createInterstitialAd"])({
+    adUnitId: adUnitId
+  });
+  interstitialAd.onLoad(function (e) {
+    callback.onLoad && callback.onLoad();
+  });
+  interstitialAd.onClose(function (e) {
+    callback.onClose && callback.onClose(e);
+  });
+  interstitialAd.onError(function (e) {
+    callback.onError && callback.onError(e);
+  });
+  return interstitialAd;
+};
+/**
+ * 创建激励视频广告
+ * @param adUnitId
+ */
+
+var rewardedVideoAdCreate1 = function rewardedVideoAdCreate1(adUnitId, callback) {
+  rewardedVideoAd = Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["createRewardedVideoAd"])({
+    adUnitId: adUnitId
+  });
+  rewardedVideoAd.onLoad(function (e) {
+    callback.onLoad && callback.onLoad(e);
+  });
+  rewardedVideoAd.onClose(function (e) {
+    callback.onClose && callback.onClose(e);
+  });
+  rewardedVideoAd.onError(function (e) {
+    callback.onError && callback.onError(e);
+  });
+  return rewardedVideoAd;
+};
+/**
+ * 激励视频广告的显示
+ * @param rewardedVideoAd
+ */
+
+var rewardedVideoAdShow1 = function rewardedVideoAdShow1(rewardedVideoAd) {
+  if (rewardedVideoAd) {
+    rewardedVideoAd.show().catch(function () {
+      rewardedVideoAd.load().then(function () {
+        return rewardedVideoAd.show();
+      }).catch(function (err) {
+        console.log('激励视频 广告显示失败', err);
+      });
+    });
+  }
+};
+var setMyInterval = function setMyInterval(intervalRef, interval, callback) {
+  intervalRef.current = setInterval(function () {
+    console.log("===============================");
+    callback && callback();
+  }, interval);
+};
+var clearMyInterval = function clearMyInterval(intervalRef, callback) {
+  callback && callback();
+  clearInterval(intervalRef.current);
+};
+
 /***/ })
 
 }]);

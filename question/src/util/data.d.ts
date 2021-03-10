@@ -1,4 +1,8 @@
 
+export type AdjustType = 'right'|'error'|'sign'
+
+export type AnswerStatus = ''|'card'|'close'|'empty'|'error'|'right'|'cashout'|'cashout_yes'|'get';
+
 export type SystemInfo = {
     SDKVersion: string;
     batteryLevel: number;
@@ -53,6 +57,7 @@ export type UserInfo = {
     level:number;
     reviewRewardedVideoAdCount: number;
     isSign: boolean;
+    totalRight:number;
 }
 
 export type AdIds = {
@@ -89,9 +94,13 @@ export type SiteConfig = {
     }
 }
 
-export type Idiom = {
-    level: number;
-    words: string[];
-    answers:string[];
-    position:number;
+export type Answer = {
+    answer:string;
+    isRight:boolean;
+}
+
+export type Question = {
+    image?: string;
+    answers:Answer[];
+    title:string;
 }

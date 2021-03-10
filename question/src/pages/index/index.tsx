@@ -1,13 +1,19 @@
 import * as React from 'react';
-import {View, Swiper, SwiperItem, Image, Text, Button, OpenData, navigateTo, Ad,ScrollView} from 'remax/wechat';
+import {View, Swiper, SwiperItem, Image, Text, Button, OpenData, navigateTo, Ad,ScrollView,showToast} from 'remax/wechat';
 // @ts-ignore
 import classNames from "classnames";
+import {usePageEvent} from 'remax/macro';
 import './index.css';
-import OtherModal from "@/components/OtherModal";
+import OtherModal, {AnswerStatus} from "@/components/OtherModal";
 import RedPackageModal from "@/components/RedPackageModal";
 
 // @ts-ignore
 import NativeAd from '@/components/NativeAd';
+import {getStorage, getUserInfo, post, setMyInterval, setStorage, themeMode, userLogin} from "@/util/wxUtils";
+import {useRef, useState} from "react";
+import {AdjustType, Answer, Question, UserInfo} from "@/util/data";
+import {defaultUserInfo} from "@/util/constants";
+import user from "../../../../min_program_cpanel/mock/user";
 
 const sysinfo = {
   sys_is_xcxlist:2,
@@ -31,35 +37,12 @@ const notice = {
   text:'版本已升级，包含全新题库，有任何问题请联系客服',
   marqueeDistance:0,
 }
-const user ={
-  money:1.3,
-  uname:'abc',
-  answernum:3,
-  totalrightnum:12,
-};
+
 const index_total = {
   money:12345,
   redbag:38545,
 
 };
-const question_time = 12;
-
-const question = {
-  "title":"世界上大约有多少种语言?",
-  "image":null,
-  "answers":[
-    {
-      "t":"1",
-      "answer":"近3000种",
-      "istrue":"1"
-    },
-    {
-      "t":"2",
-      "answer":"近2000种",
-      "istrue":"2"
-    }
-  ]
-}
 
 const showAd = 'c3';
 
@@ -188,7 +171,109 @@ const rankList = [
 
 const sys_rightlist=[10,30,60,100,180,300];
 
+let timer:NodeJS.Timeout;
+
+const defaultQuestionTime = 15;
+
 export default () => {
+
+
+  // 题目信息
+  const [question,setQuestion] = useState<Question>({title:'',answers:[]});
+  // 选项按钮是否点击，防止过快点击
+  const [buttonClicked,setButtonClicked] = useState<boolean>(false);
+
+  const [answerStatus,setAnswerStatus] = useState<AnswerStatus>('');
+
+  const [otherModalVisible,setOtherModalVisible] = useState<boolean>(false);
+
+  const [userInfo,setUserInfo] = useState<UserInfo>(defaultUserInfo);
+
+  const [questionTime,setQuestionTime] = useState<number>(defaultQuestionTime);
+
+  const [redPackageMoney,setRedPackageMoney] = useState<number>(0);
+
+  const get=()=>{
+    clearInterval(timer);
+    post('question/get',{},data=>{
+      setQuestion(data);
+      setQuestionTime(defaultQuestionTime)
+      countDown();
+    });
+  }
+
+  const countDown=()=>{
+    timer = setInterval(() => {
+      setQuestionTime(v => {
+        if(v<=0){
+          clearInterval(timer);
+          get();
+          return defaultQuestionTime;
+        }
+        return v - 1;
+      });
+    }, 1000);
+  }
+
+  usePageEvent('onLoad',(e)=>{
+    get();
+    userLogin(e.detail,data=>{
+      setStorage('totalRight',data.userInfo.totalRight || 0);
+      setUserInfo(data.userInfo);
+    });
+  })
+
+  /**
+   * 答案的选择
+   */
+  const choose = (answer:Answer) =>{
+    // 判断答题卡够不够
+    if(userInfo.point<100){
+      setOtherModalVisible(true);
+      setAnswerStatus('empty');
+      return ;
+    }
+
+    if(buttonClicked){
+      showToast({
+        title:'请勿点击过快',
+        icon:'none',
+      }).then();
+      return ;
+    }
+    setButtonClicked(true);
+    setOtherModalVisible(true);
+    // 默认是失败
+    let type:AdjustType='error';
+    if(answer.isRight){
+      setStorage('continuousRightCount',parseInt(getStorage('continuousRightCount'))+1);
+      setAnswerStatus('right');
+      setStorage('totalRight',parseInt(getStorage('totalRight'))+1);
+      setUserInfo({
+        ...userInfo,
+        totalRight:getStorage('totalRight'),
+        point:userInfo.point-100,
+      });
+      type='right';
+    }else{
+      setStorage('continuousRightCount',0);
+      type='error';
+      setAnswerStatus('error');
+      setUserInfo({
+        ...userInfo,
+        point:userInfo.point-100,
+      });
+    }
+    // 不管答成功还是答失败，都需要请求接口来扣除答题卡
+    post('question/adjust',{
+      type ,
+    },data=>{
+      console.log(data);
+    })
+
+    setButtonClicked(false);
+  }
+
   return (
     <>
       {
@@ -237,13 +322,13 @@ export default () => {
         </View>
         <View className="account clearfix">
           <Image src="/images/icon_hongbao.png" />
-          <Text className="amount">{user.money}</Text>
+          <Text className="amount">{userInfo.balance}</Text>
           {sysinfo.sys_is_cashout == 1 ? '元' : '个'}
           {
             sysinfo.sys_is_cashout?(
                 <View className="cashbox">
                   {
-                    user.uname ? (
+                    userInfo.isAuth ? (
                         <Button className="cashbtn">提现</Button>
                     ) : (
                         <Button className="cashbtn" openType="getUserInfo">提现</Button>
@@ -270,13 +355,13 @@ export default () => {
             </View>
             <view className="count">剩余{index_total.redbag}个红包</view>
           </View>
-          <View className="timer">{question_time}</View>
+          <View className="timer">{questionTime}</View>
           <View className="problem">
             <View className="tit">{question.title}</View>
             <View className="list">
               {
                 question.answers.map((item,index)=>(
-                    <Button className="item" key={index}>{item.answer}</Button>
+                    <Button className="item" key={index} onClick={()=>choose(item)}>{item.answer}</Button>
                 ))
               }
             </View>
@@ -284,10 +369,10 @@ export default () => {
           <View className="foot">
             <View className="text">
               <Image className="icon_card" src="/images/ancard.png" />
-              答题卡：{user.answernum} 张
+              答题卡：{userInfo.point/100} 张
             </View>
             <View className="text2">
-              <view className="btn">领取答题卡</view>
+              <view className="btn" onClick={()=>navigateTo({url:'/pages/receive/index'}).then()}>领取答题卡</view>
             </View>
           </View>
         </View>
@@ -313,7 +398,7 @@ export default () => {
       {
         sysinfo.sys_rightlist ? (
             <View className="index-redpacket">
-              <View className="rp-header">累计答对题目：{user.totalrightnum}题</View>
+              <View className="rp-header">累计答对题目：{userInfo.totalRight||0}题</View>
               <ScrollView scrollX className="rp-content" style={{width:'100%'}}>
                 <View className="list">
                   {
@@ -322,15 +407,15 @@ export default () => {
                           <View className="s-rp-con">
                             <View className={classNames(
                                 'status',
-                                user.totalrightnum>=item?'active':''
+                                (userInfo.totalRight||0)>=item?'active':''
                             )}>领</View>
                             <View className="desc">累计答对</View>
                             <View className="desc">{item}题可开</View>
                           </View>
                           <Button className={classNames(
                               'btn',
-                              user.totalrightnum>=item?'active':''
-                          )}>{user.totalrightnum >= item ? '拆红包' : '再答' + (item - user.totalrightnum) + '题'}</Button>
+                              (userInfo.totalRight||0)>=item?'active':''
+                          )}>{(userInfo.totalRight||0) >= item ? '拆红包' : '再答' + (item - (userInfo.totalRight||0)) + '题'}</Button>
                         </View>
                     ))
                   }
@@ -381,7 +466,11 @@ export default () => {
       }
 
 
-      <OtherModal visible={false} />
+      <OtherModal visible={otherModalVisible} status={answerStatus} onClose={(status)=>{
+        setOtherModalVisible(false);
+        setAnswerStatus('');
+        get();
+      }} />
       <RedPackageModal visible={false} />
     </>
   );

@@ -15,4 +15,14 @@ public enum RewardType {
      * 观看视频广告奖励
      */
     reviewRewardedVideoAd,
+
+    /**
+     * 答题成功
+     */
+    right,
+
+    /**
+     * 答题失败
+     */
+    error,
 }

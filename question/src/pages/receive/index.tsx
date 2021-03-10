@@ -1,7 +1,13 @@
 import * as React from 'react';
 import {View, Button, Image, Ad} from 'remax/wechat';
+import {usePageEvent} from 'remax/macro';
+// @ts-ignore
 import classNames from 'classnames';
 import './index.css';
+import {getUserInfo, post} from "@/util/wxUtils";
+import {useState} from "react";
+import {defaultUserInfo} from "@/util/constants";
+import {UserInfo} from "@/util/data";
 
 const user = {
     answernum:444,
@@ -23,11 +29,39 @@ const btn = {
 
 
 export default () => {
+
+    const [userInfo,setUserInfo] = useState<UserInfo>(defaultUserInfo);
+
+    usePageEvent('onLoad',()=>{
+        getUserInfo(data=>setUserInfo(data))
+    });
+
+    // 分享
+    usePageEvent('onShareAppMessage',()=>{
+        return {
+            title: 'aaa',
+            path: "/pages/index/index?parentId=" + 12345,
+            imageUrl: 'aaa',
+        }
+    })
+
+    /**
+     * 签到
+     */
+    const sign = () =>{
+        post('question/adjust',{
+            type:'sign'
+        },data=>{
+            console.log(data);
+        })
+    }
+
+
   return (
     <>
         <View style={{height:20}} />
         <View className="cashout_maina">
-            <View className="h2">{user.answernum}</View>
+            <View className="h2">{userInfo.point/100}</View>
             <View className="h3">我的答题卡（张）</View>
             <View className="cont clearfix">
                 <View className="box">
@@ -57,7 +91,22 @@ export default () => {
                     <View className="h3">每日签到</View>
                     <View className="p">奖励答题卡</View>
                 </View>
-                <Button className="btn">签到</Button>
+                {
+                    userInfo.isSign ? (
+                        <Button
+                            className={classNames(
+                                'btn',
+                                userInfo.isSign?'disabled':''
+                            )}
+                            disabled={ userInfo.isSign}
+                        >
+                            今日已签到
+                        </Button>
+                    ) : (
+                        <Button className="btn" onClick={sign}>签到</Button>
+                    )
+                }
+
             </View>
             {
                 sysinfo.sys_ad_video_id ? (
@@ -67,18 +116,20 @@ export default () => {
                             <View className="h3">观看视频</View>
                             <View className="p">随机奖励1~5张</View>
                         </View>
-                        <Button bindtap="make_videoad"
-                                className={classNames(
-                                    'btn',
-                                    user.ad_video_num>=sysinfo.sys_ad_video_watchnum?'disabled':''
-                                )}
-                                disabled={user.ad_video_num>=sysinfo.sys_ad_video_watchnum}
-                                wx:if="{{!btn.make_video_btn}}">观看({user.ad_video_num}/{sysinfo.sys_ad_video_watchnum})
-                        </Button>
                         {
                             btn.make_video_btn ? (
                                 <Button className="btn disabled" disabled>{btn.make_video_btn_time}s</Button>
-                            ) : null
+                            ) : (
+                                <Button
+                                    className={classNames(
+                                        'btn',
+                                        user.ad_video_num>=sysinfo.sys_ad_video_watchnum?'disabled':''
+                                    )}
+                                    disabled={user.ad_video_num>=sysinfo.sys_ad_video_watchnum}
+                                >
+                                    观看({user.ad_video_num}/{sysinfo.sys_ad_video_watchnum})
+                                </Button>
+                            )
                         }
 
                     </View>
