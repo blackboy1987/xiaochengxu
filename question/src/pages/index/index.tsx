@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Swiper, SwiperItem, Image, Text, Button, OpenData, navigateTo, Ad,ScrollView} from 'remax/wechat';
+// @ts-ignore
 import classNames from "classnames";
 import './index.css';
 import OtherModal from "@/components/OtherModal";
