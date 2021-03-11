@@ -19,3 +19,11 @@ export async function getNotices(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+export async function download(options?: { [key: string]: any }) {
+  return request<API.CurrentUser>(Constants.baseUrl+'download', {
+    method: 'POST',
+    requestType:'form',
+    ...(options || {}),
+  });
+}

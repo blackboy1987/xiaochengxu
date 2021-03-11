@@ -88,7 +88,9 @@ export type SiteConfig = {
         perVideoGold: number;
         inviteButtonText:string;
         inviteText: string;
+        // 每天激励视频的个数
         dayRewardedVideoAdCount:number;
+        // 两个激励视频之间的间隔
         rewardedVideoAdInterval:number;
         redPackage: string;
     }

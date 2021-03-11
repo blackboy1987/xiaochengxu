@@ -74,31 +74,37 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean usernameExists(String username) {
         return appDao.exists("username",username);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean appIdExists(String appId) {
         return appDao.exists("appId",appId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean appSecretExists(String appSecret) {
         return appDao.exists("appSecret",appSecret);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean appNameExists(String appName) {
         return appDao.exists("appName",appName);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean appCodeExists(String appCode) {
         return appDao.exists("appCode",appCode);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean appTokenExists(String appToken) {
         return appDao.exists("appToken",appToken);
     }

@@ -1,5 +1,6 @@
 package com.bootx.controller.admin;
 
+import com.bootx.StsServiceSample;
 import com.bootx.common.Result;
 import com.bootx.controller.BaseController;
 import com.bootx.entity.App;
@@ -38,6 +39,21 @@ public class IndexController extends BaseController {
         return Result.success(data);
     }
 
-
+    @PostMapping("/download")
+    private Result download(HttpServletRequest request) {
+        App app = appService.get1(request);
+        Map<String,Object> data = new HashMap<>();
+        if(app==null){
+            return Result.error("非法访问");
+        }
+        if(app.getType()==1){
+            data.put("code",0);
+            data.put("downloadUrl",StsServiceSample.getUrl("movie.zip"));
+        }else{
+            data.put("code",-1);
+            data.put("msg","暂无该小程序源码");
+        }
+        return Result.success(data);
+    }
 
 }

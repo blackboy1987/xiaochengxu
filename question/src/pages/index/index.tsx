@@ -216,11 +216,18 @@ export default () => {
   }
 
   usePageEvent('onLoad',(e)=>{
-    get();
     userLogin(e.detail,data=>{
       setStorage('totalRight',data.userInfo.totalRight || 0);
       setUserInfo(data.userInfo);
     });
+  })
+
+  usePageEvent('onHide',(e)=>{
+    clearInterval(timer);
+  })
+
+  usePageEvent('onShow',(e)=>{
+    get();
   })
 
   /**

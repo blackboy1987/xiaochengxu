@@ -80,6 +80,45 @@ public class DateUtils {
     }
 
     /**
+     * 距离当前时间index天之后的时间
+     * @param index
+     *      相隔的天数。index=0：当天，index>0 之后的index天。index<0:之前的index天
+     * @return
+     *      距离当前时间index天之后的时间
+     */
+    public static Date getNextHhour(Integer index) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return convertLocalDateTimeToDate(localDateTime.plusHours(index));
+    }
+
+
+    /**
+     * 距离当前时间index天之后的时间
+     * @param index
+     *      相隔的天数。index=0：当天，index>0 之后的index天。index<0:之前的index天
+     * @return
+     *      距离当前时间index天之后的时间
+     */
+    public static Date getNextMinute(Integer index) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return convertLocalDateTimeToDate(localDateTime.plusMinutes(index));
+    }
+
+
+    /**
+     * 距离当前时间index天之后的时间
+     * @param index
+     *      相隔的天数。index=0：当天，index>0 之后的index天。index<0:之前的index天
+     * @return
+     *      距离当前时间index天之后的时间
+     */
+    public static Date getNextSecond(Integer index) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return convertLocalDateTimeToDate(localDateTime.plusSeconds(index));
+    }
+
+
+    /**
      * 距离指定时间index天之后的时间
      * @param index
      *      相隔的天数。index=0：当天，index>0 之后的index天。index<0:之前的index天

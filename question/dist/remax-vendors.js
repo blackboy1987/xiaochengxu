@@ -26435,7 +26435,7 @@ var defaultSiteConfig = {
     inviteButtonText: '邀请新用户领取2000金币',
     inviteText: '邀请领红包好友',
     dayRewardedVideoAdCount: 5,
-    rewardedVideoAdInterval: 0,
+    rewardedVideoAdInterval: 120,
     redPackage: ''
   }
 };

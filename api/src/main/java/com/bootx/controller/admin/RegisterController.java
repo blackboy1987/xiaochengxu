@@ -30,8 +30,30 @@ public class RegisterController extends BaseController {
     @Resource
     private AppService appService;
 
+    @PostMapping("/checkUsername")
+    public Result checkUsername(String username){
+        return Result.success(appService.usernameExists(username));
+    }
+
+
+    @PostMapping("/checkAppId")
+    public Result checkAppId(String appId){
+        return Result.success(appService.appCodeExists(appId));
+    }
+
+    @PostMapping("/checkAppName")
+    public Result checkAppName(String appName){
+        return Result.success(appService.appNameExists(appName));
+    }
+
+    @PostMapping("/checkAppSecret")
+    public Result checkAppSecret(String appSecret){
+        return Result.success(appService.appSecretExists(appSecret));
+    }
+
+
     @PostMapping("/submit")
-    private Result login(String appId,String appSecret,String appName,String username,String password) {
+    public Result login(String appId,String appSecret,String appName,String username,String password) {
         if (!isValid(Member.class, "username", username, BaseEntity.Save.class)
                 || !isValid(Member.class, "password", password, BaseEntity.Save.class)
                 || !isValid(Member.class, "appId", appId, BaseEntity.Save.class)
