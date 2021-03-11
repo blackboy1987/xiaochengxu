@@ -1,5 +1,5 @@
 import {PageContainer} from "@ant-design/pro-layout";
-import {Button, Card, Col, Form, Input, InputNumber, message, Row, Select} from "antd";
+import {Button, Card, Col, Form, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {config, configUpdate} from "@/pages/setting/service";
 
