@@ -15,6 +15,7 @@
             src="{{src}}"
             style="display: block; width: 100%;"
             unitId="{{unitId}}"
+            show-fullscreen-btn="{{false}}"
     >
         <cover-view className="cover" wx:if="{{showTips}}">{{message}}</cover-view>
     </video>

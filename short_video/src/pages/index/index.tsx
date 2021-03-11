@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Image,ScrollView } from 'remax/wechat';
+import { View, Text, Image,ScrollView,navigateTo } from 'remax/wechat';
 // @ts-ignore
 import classNames from 'classnames';
 import {usePageEvent} from 'remax/macro';
@@ -9,35 +9,37 @@ import BlankPage from "@/components/BlankPage";
 import {post} from "@/util/wxUtils";
 
 export type TabItem = {
-    id: number;
+    id: string;
     name: string;
 }
 
 export default () => {
-    const [activeTab,setActiveTab] = useState<number>(3);
+    const [activeTab,setActiveTab] = useState<string>('0');
     const [data,setData] = useState<any[]>([]);
     const [tabs,setTabs] = useState<TabItem[]>([]);
     const [page,setPage] = useState<number>(1);
 
-    const list =(id: number,page:number)=>{
-        if(page===1){
-            setData([]);
-        }
+    const list =(id: string,page:number)=>{
         post("short_video/list",{
             categoryId:id,
             page:page||1,
         },res=>{
-            setData([
-                ...data,
-                ...res,
-            ]);
+            if(page===1){
+                setData(res.retStr);
+            }else{
+                setData([
+                    ...data,
+                    ...res.retStr,
+                ]);
+            }
+
             setPage(page||1);
         })
     }
 
     const category = () =>{
         post("short_video/category",{},data=>{
-            setTabs(data);
+            setTabs(data.data);
         })
     }
 
@@ -65,7 +67,7 @@ export default () => {
     <View>
         <View className='tabs'>
             <View className='tabs-bar'>
-                <ScrollView scrollX scrollIntoView={`item_${activeTab-3}`} scrollWithAnimation>
+                <ScrollView scrollX scrollIntoView={`item_${parseInt(activeTab)-2}`} scrollWithAnimation>
                     <View className='tabs-bar-content'>
                         {
                             tabs.map(item=>(
@@ -85,13 +87,17 @@ export default () => {
                         <>
                             {
                                 data.map(video=>(
-                                    <View className="list" key={video.id}>
+                                    <View className="list" key={video.itemid} onClick={()=>{
+                                        navigateTo({
+                                            url:'/pages/detail/index?id='+video.itemid,
+                                        }).then();
+                                    }}>
                                         <View>
                                             <View>
-                                                <Text className="video-txt">{video.title}</Text>
+                                                <Text className="video-txt">{video.videoname}</Text>
                                             </View>
                                             <View className="video-link">
-                                                <Image className="video-img" src={video.videoImage} />
+                                                <Image className="video-img" src={video.videoimgurl} />
                                                 <Text className="play-btn" />
                                                 <Text className="list-video-time">{video.time}</Text>
                                             </View>

@@ -2,6 +2,7 @@ package com.bootx.app.duanshipin.controller;
 
 import com.bootx.common.Pageable;
 import com.bootx.common.Result;
+import com.bootx.util.WebUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +19,32 @@ public class IndexController {
 
     @PostMapping("/category")
     public Result category(){
-        return Result.success(jdbcTemplate.queryForList("select id,name from duanshipin_short_video_channel order by id asc "));
+        return Result.success(jdbcTemplate.queryForList("select channelId id,name from duanshipin_short_video_channel order by id asc "));
     }
     @PostMapping("/list")
-    public Result list(Long categoryId, Pageable pageable){
+    public String list(Long categoryId, Pageable pageable){
         pageable.setPageSize(5);
-        return Result.success(jdbcTemplate.queryForList("select id,time,title,videoImage from duanshipin_short_video where shortVideoChannel_id="+categoryId+" order by uploadTime desc limit "+(pageable.getPageNumber()-1)*pageable.getPageSize()+","+pageable.getPageSize()));
+        String url="https://weixinapi.baomihua.com/getrecommend.ashx?dataType=rec&pageIndex="+pageable.getPageSize()+"&pageSize=5&sceneType=weixin_index&clientId=&channelId="+categoryId+"&wxnum=1000&pmhUserId=&version=v7.0.4";
+        if(categoryId==0){
+            url="https://weixinapi.baomihua.com/getrecommend.ashx?dataType=newlist&pageIndex="+pageable.getPageSize()+"&pageSize=5&sceneType=weixin_channel&clientId=&channelId=0&wxnum=1000&pmhUserId=&version=v7.0.4";
+        }
+
+        return WebUtils.get(url, null);
     }
     @PostMapping("/detail")
-    public Result detail(Long id){
-        return Result.success(jdbcTemplate.queryForMap("select * from duanshipin_short_video where id="+id));
+    public String detail(Long id){
+
+        String url="https://weixinapi.baomihua.com/getvideourl.aspx?flvid="+id+"&devicetype=wap&dataType=json";
+
+        return WebUtils.get(url, null);
     }
+
+
+    @PostMapping("/getrecommend")
+    public String getrecommend(Long id){
+        String url="https://weixinapi.baomihua.com/getrecommend.ashx?dataType=relate&videoId="+id+"&pageIndex=1&pageSize=30&sceneType=weixin_play&clientId=&version=v7.0.4";
+        return WebUtils.get(url, null);
+    }
+
+
 }

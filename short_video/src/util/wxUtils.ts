@@ -54,19 +54,10 @@ export const post = (url:string,data:{[key:string]:any},callback:(response:any)=
     }).then((response)=>{
         if(response.statusCode>=200&&response.statusCode<300){
             const {data} = response;
-            if(data.code===0){
-                callback&&callback(data.data);
-            }else{
-                showToast({
-                    title: data.msg,
-                    icon: 'none',
-                    duration: 5000,
-                    mask: true
-                }).then();
-            }
+            callback&&callback(data);
         }else {
             showToast({
-                title: data.msg,
+                title: data.msg||'',
                 icon: 'none',
                 duration: 5000,
                 mask: true

@@ -409,6 +409,33 @@
     position: relative;
 }
 
+
+.video-time {
+    display: inline-block;
+    color: #fff;
+    font-size: 24rpx;
+    height: 44rpx;
+    background: rgba(0,0,0,0.4);
+    border-radius: 20rpx;
+    padding: 0 10rpx;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    bottom: 6rpx;
+    right: 10rpx;
+}
+
+.video-time:before {
+    content: '';
+    display: inline-block;
+    width: 26rpx;
+    height: 26rpx;
+    background: url(http://static01.baomihua.com/img/mobile/v4/bmh-newIndex-playbtn-sm.png) no-repeat;
+    background-size: contain;
+    margin-right: 6rpx;
+}
+
 #img {
     width: 230rpx;
     top: 50%;

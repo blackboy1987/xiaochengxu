@@ -26427,20 +26427,10 @@ var post = function post(url, data, callback) {
   }).then(function (response) {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       var _data = response.data;
-
-      if (_data.code === 0) {
-        callback && callback(_data.data);
-      } else {
-        Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["showToast"])({
-          title: _data.msg,
-          icon: 'none',
-          duration: 5000,
-          mask: true
-        }).then();
-      }
+      callback && callback(_data);
     } else {
       Object(remax_wechat__WEBPACK_IMPORTED_MODULE_0__["showToast"])({
-        title: data.msg,
+        title: data.msg || '',
         icon: 'none',
         duration: 5000,
         mask: true

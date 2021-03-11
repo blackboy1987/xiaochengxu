@@ -22,7 +22,7 @@ Component({
     },
     danmuBtn: {
       type: Boolean,
-      value: true
+      value: false
     },
     duration: {
       type: Number,
