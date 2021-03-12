@@ -841,7 +841,8 @@ module.exports = {
     "onShareAppMessage"
   ],
   "pages/detail/index": [
-    "onLoad"
+    "onLoad",
+    "onUnload"
   ]
 },
       appEvents: []

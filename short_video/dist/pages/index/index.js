@@ -212,7 +212,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('0'),
       _useState2 = _slicedToArray(_useState, 2),
       activeTab = _useState2[0],
       setActiveTab = _useState2[1];
@@ -233,22 +233,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       setPage = _useState8[1];
 
   var list = function list(id, page) {
-    if (page === 1) {
-      setData([]);
-    }
-
     Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_6__["post"])("short_video/list", {
       categoryId: id,
       page: page || 1
     }, function (res) {
-      setData([].concat(_toConsumableArray(data), _toConsumableArray(res)));
+      if (page === 1) {
+        setData(res.retStr);
+      } else {
+        setData([].concat(_toConsumableArray(data), _toConsumableArray(res.retStr)));
+      }
+
       setPage(page || 1);
     });
   };
 
   var category = function category() {
     Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_6__["post"])("short_video/category", {}, function (data) {
-      setTabs(data);
+      setTabs(data.data);
     });
   };
 
@@ -273,7 +274,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     className: "tabs-bar"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["ScrollView"], {
     scrollX: true,
-    scrollIntoView: "item_".concat(activeTab - 3),
+    scrollIntoView: "item_".concat(parseInt(activeTab) - 2),
     scrollWithAnimation: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
     className: "tabs-bar-content"
@@ -293,15 +294,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   }, data.length <= 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_BlankPage__WEBPACK_IMPORTED_MODULE_5__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, data.map(function (video) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
       className: "list",
-      key: video.id,
-      __key: video.id
+      key: video.itemid,
+      onClick: function onClick() {
+        Object(remax_wechat__WEBPACK_IMPORTED_MODULE_2__["navigateTo"])({
+          url: '/pages/detail/index?id=' + video.itemid
+        }).then();
+      },
+      __key: video.itemid
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
       className: "video-txt"
-    }, video.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
+    }, video.videoname)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
       className: "video-link"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Image"], {
       className: "video-img",
-      src: video.videoImage
+      src: video.videoimgurl
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
       className: "play-btn"
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
@@ -323,7 +329,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\IdeaProjects\xiaochengxu\short_video\src\pages\index\index.entry.js */"./src/pages/index/index.entry.js");
+module.exports = __webpack_require__(/*! /Users/blackoy/Desktop/xiaochengxu21/short_video/src/pages/index/index.entry.js */"./src/pages/index/index.entry.js");
 
 
 /***/ })

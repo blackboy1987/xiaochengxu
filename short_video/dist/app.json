@@ -8,5 +8,20 @@
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "tabBar": {
+    "color": "#A9A9A9",
+    "selectedColor": "#f49c36",
+    "borderStyle": "black",
+    "backgroundColor": "#323232",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "分类"
+      }
+    ]
+  }
 }

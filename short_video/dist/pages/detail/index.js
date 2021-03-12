@@ -62,14 +62,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index.css */ "./src/pages/detail/index.css");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _util_wxUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/util/wxUtils */ "./src/util/wxUtils.ts");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -96,44 +88,34 @@ var channelImgUrl = "http://static01.baomihua.com/img/userchannel/defaultx.jpg";
 var channelName = "热播综艺咖";
 var percent = 250 / 300 * 100 * 18 / 5;
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       data = _useState2[0],
       setData = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(1),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      page = _useState4[0],
-      setPage = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
-      _useState6 = _slicedToArray(_useState5, 2),
-      list = _useState6[0],
-      setList = _useState6[1];
+      list = _useState4[0],
+      setList = _useState4[1];
 
   Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onLoad', function (e) {
     Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["post"])('short_video/detail', e, function (data) {
       setData(data);
-
-      if (page === 1) {
-        setList([]);
-      }
-
-      Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["post"])("short_video/list", {
-        categoryId: 3,
-        page: page || 1
-      }, function (res) {
-        console.log(list, res);
-        setList([].concat(_toConsumableArray(list), _toConsumableArray(res)));
-        setPage(page || 1);
+      Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["post"])('short_video/getrecommend', e, function (data) {
+        setList(data.retStr);
       });
     });
+  });
+  Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onUnload', function () {
+    Object(remax_wechat__WEBPACK_IMPORTED_MODULE_2__["switchTab"])({
+      url: '/pages/index/index'
+    }).then();
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
     id: "page-wrap"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_MyVideo__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    src: "https://bootx-video.oss-cn-hangzhou.aliyuncs.com/47450474/47450474.mp4",
-    poster: "https://bootx-video.oss-cn-hangzhou.aliyuncs.com/47450474/47450474.jpg",
+    poster: (data.video_img || '').replace('x', '640_360'),
+    src: 'https://' + data.alipalyurl,
     controls: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["ScrollView"], {
     className: "scroll_wrap",
@@ -151,11 +133,11 @@ var percent = 250 / 300 * 100 * 18 / 5;
     className: "video_user"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
     className: "video_user_info",
-    "data-channelid": "{{appId}}"
+    "data-channelid": data === null || data === void 0 ? void 0 : data.appId
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Image"], {
     mode: "aspectFit",
-    src: channelImgUrl
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("text", null, channelName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    src: data === null || data === void 0 ? void 0 : data.channelImgUrl
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("text", null, data === null || data === void 0 ? void 0 : data.channelName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Button"], {
     className: "share_btn",
     openType: "share"
   }, "\u5206\u4EAB", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Image"], {
@@ -174,22 +156,27 @@ var percent = 250 / 300 * 100 * 18 / 5;
     }, (index + 1) % 9 == 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Ad"], {
       unitId: "adunit-606e0961f30e013c"
     })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
-      className: "flow-linka"
+      className: "flow-linka",
+      onClick: function onClick() {
+        Object(remax_wechat__WEBPACK_IMPORTED_MODULE_2__["navigateTo"])({
+          url: '/pages/detail/index?id=' + video.videoid
+        }).then();
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
       id: "pic"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Image"], {
       id: "img",
       mode: "widthFix",
-      src: video.videoImage
+      src: video.videoimgurl
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
       className: "video-time"
     }, video.time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
       className: "info"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
       className: "info-title"
-    }, video.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
+    }, video.videoname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Text"], {
       className: "info-count"
-    }, video.channelName || '汽车之家'))));
+    }, video.channelName || ''))));
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], {
     className: "play-fixed-btn"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Image"], {
@@ -219,7 +206,7 @@ var percent = 250 / 300 * 100 * 18 / 5;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\IdeaProjects\xiaochengxu\short_video\src\pages\detail\index.entry.js */"./src/pages/detail/index.entry.js");
+module.exports = __webpack_require__(/*! /Users/blackoy/Desktop/xiaochengxu21/short_video/src/pages/detail/index.entry.js */"./src/pages/detail/index.entry.js");
 
 
 /***/ })
