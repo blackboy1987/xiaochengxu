@@ -42,7 +42,7 @@
   "compileType": "miniprogram",
   "libVersion": "2.15.0",
   "appid": "wxf78f44b6d9754bd8",
-  "projectname": "miniprogram-2",
+  "projectname": "movie",
   "debugOptions": {
     "hidedInDevtools": []
   },

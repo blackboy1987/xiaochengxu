@@ -112,7 +112,7 @@ public class DateUtils {
      * @return
      *      距离当前时间index天之后的时间
      */
-    public static Date getNextSecond(Integer index) {
+    public static Date getNextSecond(long index) {
         LocalDateTime localDateTime = LocalDateTime.now();
         return convertLocalDateTimeToDate(localDateTime.plusSeconds(index));
     }

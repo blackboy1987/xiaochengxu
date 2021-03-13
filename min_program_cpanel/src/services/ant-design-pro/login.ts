@@ -29,7 +29,6 @@ export async function outLogin(options?: { [key: string]: any }) {
   });
 }
 
-/** 登录接口 POST /api/login/account */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
   return request<API.LoginResult>(Constants.baseUrl+'login/submit', {
     method: 'POST',
@@ -40,3 +39,23 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     return res.data;
   });
 }
+
+export async function wechatLogin() {
+  return request(Constants.baseUrl+'wechat/login', {
+    method: 'GET',
+  });
+}
+
+export async function loginRefresh(body:{[key:string]: any}, options?: { [key: string]: any }) {
+  return request(Constants.baseUrl+'wechat/login/refresh', {
+    method: 'POST',
+    data: body,
+    requestType:'form',
+    ...(options || {}),
+  });
+}
+
+
+
+
+

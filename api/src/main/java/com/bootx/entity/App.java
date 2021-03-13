@@ -6,10 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -52,23 +49,9 @@ public class App extends BaseEntity<Long>{
 
     private String logo;
 
-    @NotEmpty
-    @Column(nullable = false,updatable = false,unique = true)
-    private String username;
-
-    /**
-     * 密码
-     */
-    @NotEmpty(groups = Save.class)
-    @Length(min = 4, max = 20)
-    @Transient
-    private String password;
-
-    /**
-     * 加密密码
-     */
-    @Column(nullable = false)
-    private String encodedPassword;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(updatable = false)
+    private Admin admin;
 
     /**
      * 0：成语
@@ -92,7 +75,6 @@ public class App extends BaseEntity<Long>{
     @Convert(converter = ConfigConfigConvert.class)
     @Column(length = 3000,nullable = false)
     private Map<String,String> config = new HashMap<>();
-
 
     /**
      * 广告配置
@@ -177,54 +159,6 @@ public class App extends BaseEntity<Long>{
         this.config = config;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * 获取密码
-     *
-     * @return 密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 设置密码
-     *
-     * @param password
-     *            密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-        if (password != null) {
-            setEncodedPassword(DigestUtils.md5Hex(password));
-        }
-    }
-
-    /**
-     * 获取加密密码
-     *
-     * @return 加密密码
-     */
-    public String getEncodedPassword() {
-        return encodedPassword;
-    }
-
-    /**
-     * 设置加密密码
-     *
-     * @param encodedPassword
-     *            加密密码
-     */
-    public void setEncodedPassword(String encodedPassword) {
-        this.encodedPassword = encodedPassword;
-    }
 
     public Integer getType() {
         return type;
@@ -240,6 +174,14 @@ public class App extends BaseEntity<Long>{
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -347,8 +289,4 @@ public class App extends BaseEntity<Long>{
 
     }
 
-    @Transient
-    public boolean isValidCredentials(Object credentials) {
-        return credentials != null && StringUtils.equals(DigestUtils.md5Hex(credentials instanceof char[] ? String.valueOf((char[]) credentials) : String.valueOf(credentials)), getEncodedPassword());
-    }
 }

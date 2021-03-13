@@ -174,4 +174,22 @@ public final class WechatUtils {
         }
         return instreams;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

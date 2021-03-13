@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { Form, Button, Divider, Input } from 'antd';
 import styles from './index.less';
-import {checkUserName} from "@/pages/User/register/service";
 
 const formItemLayout = {
   labelCol: {
@@ -52,7 +51,7 @@ const Step1: React.FC<Step1Props> = ({next}) => {
   const checkPassword = (_: any, value: string) => {
     const promise = Promise;
     if (!value) {
-      return promise.reject('请输入登录密码');
+      return promise.reject('请输入安全密码');
     }
     if (value.length < 6) {
       return promise.reject('密码长度不能少于6位');
@@ -63,21 +62,6 @@ const Step1: React.FC<Step1Props> = ({next}) => {
     return promise.resolve();
   };
 
-  const checkUsername = async (_: any, value: string)=>{
-    const promise = Promise;
-    if (!value) {
-      return promise.reject('');
-    }
-
-    const result = await checkUserName({
-      username:value,
-    });
-    if (result) {
-      return promise.reject('用户名已存在');
-    }
-    return promise.resolve();
-  }
-
   return (
     <>
       <Form
@@ -87,10 +71,7 @@ const Step1: React.FC<Step1Props> = ({next}) => {
         className={styles.stepForm}
         hideRequiredMark
       >
-        <Form.Item label='登录用户名' name='username' rules={[{ required: true, message: '请输入登录用户名' },{validator: checkUsername}]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label='登录密码' name='password' rules={[{validator: checkPassword}]}>
+        <Form.Item label='安全密码' name='password' rules={[{validator: checkPassword}]}>
           <Input.Password />
         </Form.Item>
         <Form.Item label='确认密码' name='confirm' rules={[{validator: checkConfirm}]}>
@@ -113,8 +94,7 @@ const Step1: React.FC<Step1Props> = ({next}) => {
       <Divider style={{ margin: '40px 0 24px' }} />
       <div className={styles.desc}>
         <h3>说明</h3>
-        <h4>登录用户名用来登录本系统，注册成功之后，不能修改！！！</h4>
-        <h4>登录密码用来登录本系统，请牢记您的登录密码！！！</h4>
+        <h4>安全密码用来对系统的相关操作进行验证，请牢记您设置的密码！！！</h4>
       </div>
     </>
   );

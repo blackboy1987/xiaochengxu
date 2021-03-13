@@ -95,4 +95,19 @@ public class AppController {
         appService.update(app);
         return Result.success("操作成功");
     }
+
+    @PostMapping("/save")
+    public Result save(HttpServletRequest request){
+        App app = appService.get1(request);
+        if(app==null){
+            return Result.error("非法访问");
+        }
+        Map<String,Object> data = new HashMap<>();
+        data.put("appName", app.getAppName());
+        data.put("logo", app.getLogo());
+        data.put("appId", app.getAppId());
+        data.put("appSecret", app.getAppSecret());
+        data.put("status", app.getStatus());
+        return Result.success(data);
+    }
 }

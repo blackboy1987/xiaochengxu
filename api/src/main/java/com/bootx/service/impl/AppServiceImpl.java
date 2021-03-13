@@ -134,6 +134,7 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
 
 
     @Override
+    @Transactional(readOnly = true)
     public App get1(HttpServletRequest request) {
         String token = request.getHeader("token");
         if(StringUtils.isBlank(token)){

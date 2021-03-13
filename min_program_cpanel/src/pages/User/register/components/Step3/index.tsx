@@ -45,11 +45,11 @@ const Step3: React.FC<Step2Props> = ({next,prev}) => {
           rules={[{ required: true, message: '请选择小程序模板' }]}
         >
           <Radio.Group>
-            <Radio value={1}>
+            <Radio value={1} style={{display:'flex',alignItems:'center'}}>
               <Card
                 size='small'
                 hoverable
-                style={{ width: 240 }}
+                style={{ width: 120 }}
                 cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
               >
                 <Card.Meta title="电影小程序"/>
@@ -67,9 +67,9 @@ const Step3: React.FC<Step2Props> = ({next,prev}) => {
             },
           }}
         >
-          <div style={{display:'flex',justifyContent:'space-between'}}>
-            <Button onClick={()=>prev(1)} style={{ marginLeft: 8 }}>上一步</Button>
-            <Button type="primary" onClick={onValidateForm}>提交</Button>
+          <div>
+            <Button onClick={()=>prev(1)}>上一步</Button>
+            <Button type="primary" onClick={onValidateForm} style={{marginLeft:24}}>提交</Button>
           </div>
         </Form.Item>
       </Form>
