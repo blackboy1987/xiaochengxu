@@ -21,7 +21,6 @@ public class IndexController {
 
     @PostMapping("/upload")
     public Map<String,Object> upload(MultipartFile file) throws IOException {
-        System.out.println(file);
         Map<String,Object> map = new HashMap<>();
 
         String destPath = "/file/"+UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());

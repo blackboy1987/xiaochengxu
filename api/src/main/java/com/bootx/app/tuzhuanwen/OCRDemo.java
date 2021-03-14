@@ -20,7 +20,6 @@ public final class OCRDemo {
 		try {
 			HWOcrClientAKSK ocrClient=new HWOcrClientAKSK(regionName, AK, SK);
 			HttpResponse response=ocrClient.RequestOcrServiceBase64(httpUri, file.getAbsolutePath(), params);
-			System.out.println(response);
 			String content = IOUtils.toString(response.getEntity().getContent(), "utf-8");
 			ResultResponse resultResponse = JsonUtils.toObject(content, ResultResponse.class);
 			return resultResponse;

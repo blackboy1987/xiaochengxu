@@ -28,26 +28,6 @@ import java.nio.channels.FileChannel;
 public class ResponseProcessUtils {
 
 	/**
-	 * Print the HTTP status code after the service access is complete.
-	 *
-	 * @param response Response object
-	 */
-	public static void ProcessResponseStatus(HttpResponse response) {
-		System.out.println(response.getStatusLine().getStatusCode());
-	}
-
-	/**
-	 * Convert the service access result into a character stream, which is used for showing the JSON data.
-	 *
-	 * @param response Response object
-	 * @throws UnsupportedOperationException
-	 * @throws IOException
-	 */
-	public static void ProcessResponse(HttpResponse response) throws UnsupportedOperationException, IOException {
-		System.out.println(HttpClientUtils.convertStreamToString(response.getEntity().getContent()));
-	}
-
-	/**
 	 *  Write the byte array to the file to support generation of binary files (for example, images).
 	 * @param fileName File name
 	 * @param data Data
@@ -63,7 +43,6 @@ public class ResponseProcessUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
 		}
 		finally {
 			fc.close();
