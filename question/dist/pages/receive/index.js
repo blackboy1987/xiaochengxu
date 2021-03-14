@@ -49,6 +49,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _util_wxUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/util/wxUtils */ "./src/util/wxUtils.ts");
 /* harmony import */ var _util_constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/util/constants */ "./src/util/constants.ts");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -87,16 +93,22 @@ var btn = {
   make_video_btn_time: 12,
   make_video_btn: true
 };
+var timer;
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(_util_constants__WEBPACK_IMPORTED_MODULE_6__["defaultUserInfo"]),
       _useState2 = _slicedToArray(_useState, 2),
       userInfo = _useState2[0],
       setUserInfo = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(_util_constants__WEBPACK_IMPORTED_MODULE_6__["defaultSiteConfig"]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      siteInfo = _useState4[0],
+      setSiteInfo = _useState4[1];
+
   Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onLoad', function () {
-    Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["getUserInfo"])(function (data) {
-      return setUserInfo(data);
-    });
+    var siteConfig = Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["getStorage"])('siteInfo');
+    setUserInfo(Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["getStorage"])("userInfo"));
+    setSiteInfo(siteConfig);
   }); // 分享
 
   Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onShareAppMessage', function () {
@@ -115,6 +127,15 @@ var btn = {
       type: 'sign'
     }, function (data) {
       console.log(data);
+
+      if (data === 'ok') {
+        setUserInfo(_objectSpread(_objectSpread({}, userInfo), {}, {
+          isSign: true
+        }));
+        Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_5__["setStorage"])("userInfo", _objectSpread(_objectSpread({}, userInfo), {}, {
+          isSign: true
+        }));
+      }
     });
   };
 
@@ -189,9 +210,9 @@ var btn = {
     className: "btn disabled",
     disabled: true
   }, btn.make_video_btn_time, "s") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    className: classnames__WEBPACK_IMPORTED_MODULE_3___default()('btn', user.ad_video_num >= sysinfo.sys_ad_video_watchnum ? 'disabled' : ''),
-    disabled: user.ad_video_num >= sysinfo.sys_ad_video_watchnum
-  }, "\u89C2\u770B(", user.ad_video_num, "/", sysinfo.sys_ad_video_watchnum, ")")) : null, sysinfo.sys_ad_gezi_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Ad"], {
+    className: classnames__WEBPACK_IMPORTED_MODULE_3___default()('btn', user.ad_video_num >= siteInfo.config.dayRewardedVideoAdCount ? 'disabled' : ''),
+    disabled: user.ad_video_num >= siteInfo.config.dayRewardedVideoAdCount
+  }, "\u89C2\u770B(", user.ad_video_num, "/", siteInfo.config.dayRewardedVideoAdCount, ")")) : null, sysinfo.sys_ad_gezi_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["View"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_2__["Ad"], {
     adType: "grid",
     unitId: sysinfo.sys_ad_gezi_id
   })) : null));
@@ -206,7 +227,7 @@ var btn = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/blackoy/Desktop/xiaochengxu21/question/src/pages/receive/index.entry.js */"./src/pages/receive/index.entry.js");
+module.exports = __webpack_require__(/*! E:\IdeaProjects\xiaochengxu\question\src\pages\receive\index.entry.js */"./src/pages/receive/index.entry.js");
 
 
 /***/ })

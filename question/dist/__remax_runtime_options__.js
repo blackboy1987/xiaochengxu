@@ -835,7 +835,9 @@ module.exports = {
 },
       pageEvents: {
   "pages/index/index": [
-    "onLoad"
+    "onHide",
+    "onLoad",
+    "onShow"
   ],
   "pages/sign/index": [],
   "pages/faq/index": [
@@ -850,5 +852,7 @@ module.exports = {
   ],
   "pages/cashout/index": []
 },
-      appEvents: []
+      appEvents: [
+  "onLaunch"
+]
     }

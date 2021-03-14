@@ -25,9 +25,13 @@ import org.bouncycastle.jcajce.provider.digest.SHA512;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -52,11 +56,18 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
     private Random RANDOM = new Random();
 
     @Override
-    public void sync(Integer start,Integer end){
+    public void sync(Integer start,Integer end,String categoryId){
         List<ShortVideoChannel> list = shortVideoChannelService.findAll();
         for (int i = start; i < end; i++) {
             for (ShortVideoChannel shortVideoChannel:list) {
-                sync(shortVideoChannel,i);
+                if(StringUtils.isNotBlank(categoryId)){
+                    if(StringUtils.equalsAnyIgnoreCase(categoryId,shortVideoChannel.getChannelId())){
+                        sync(shortVideoChannel,i);
+                    }
+                }else{
+                    sync(shortVideoChannel,i);
+                }
+
             }
         }
     }
@@ -103,11 +114,34 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
 
             }
            new Thread(()->{
-               upload(shortVideo);
+               download(shortVideo);
            }).start();
         }
 
         return true;
+    }
+
+    private void download(ShortVideo shortVideo) {
+        // 下载网络文件
+        int bytesum = 0;
+        int byteread = 0;
+        String extension = FilenameUtils.getExtension(shortVideo.getVideoUrl());
+        try {
+            URL url = new URL(shortVideo.getVideoUrl());
+            URLConnection conn = url.openConnection();
+            InputStream inStream = conn.getInputStream();
+            FileOutputStream fs = new FileOutputStream("D:/"+shortVideo.getTitle()+"_"+shortVideo.getDescription()+"_"+shortVideo.getTags()+"_"+"."+extension);
+            byte[] buffer = new byte[1204];
+            int length;
+            while ((byteread = inStream.read(buffer)) != -1) {
+                bytesum += byteread;
+                fs.write(buffer, 0, byteread);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -174,7 +208,7 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
         }
         try{
             shortVideo.setUploadTime(new Date(jsonRootBean1.getUploadTime()*1000));
-        }catch (Exception e){
+        }catch (Exception ignored){
         }
         shortVideo.setDuration(jsonRootBean1.getTotaltime());
         shortVideo.setSize(jsonRootBean1.getVideofilesize());
@@ -184,6 +218,10 @@ public class ShortVideoServiceImpl extends BaseServiceImpl<ShortVideo, Long> imp
         shortVideo.setDuration(jsonRootBean1.getTotaltime());
         shortVideo.setTime(setTime(shortVideo.getDuration()));
         shortVideo.setTitle(jsonRootBean1.getTitle());
+        System.out.println(shortVideo.getTags());
+        System.out.println(shortVideo.getDescription());
+        System.out.println(shortVideo.getTitle());
+        System.out.println(shortVideo.getVideoUrl());
         return true;
     }
 

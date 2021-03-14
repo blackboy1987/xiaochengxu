@@ -23,7 +23,7 @@ public class ShortVideoJob {
         Integer pageInt = 1;
         Integer count = 10;
         new Thread(()->{
-            shortVideoService.sync(pageInt,count+ pageInt);
+            shortVideoService.sync(pageInt,count+ pageInt,"");
         }).start();
     }
 

@@ -62,7 +62,7 @@ var OtherModal = function OtherModal(_ref) {
   var status = _ref.status,
       visible = _ref.visible,
       onClose = _ref.onClose;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_1__["View"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, visible ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_1__["View"], {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('dialog-mask', visible ? 'mask-show' : 'mask-hide')
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"](remax_wechat__WEBPACK_IMPORTED_MODULE_1__["View"], {
     className: classnames__WEBPACK_IMPORTED_MODULE_2___default()('other-modal', 'dialog-p', visible ? 'dialog-con-show' : 'dialog-con-hide')
@@ -155,7 +155,7 @@ var OtherModal = function OtherModal(_ref) {
     onClick: function onClick() {
       return onClose(status);
     }
-  })));
+  }))) : null);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (OtherModal);
@@ -517,11 +517,16 @@ var defaultQuestionTime = 15;
   };
 
   Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onLoad', function (e) {
-    get();
     Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_8__["userLogin"])(e.detail, function (data) {
       Object(_util_wxUtils__WEBPACK_IMPORTED_MODULE_8__["setStorage"])('totalRight', data.userInfo.totalRight || 0);
       setUserInfo(data.userInfo);
     });
+  });
+  Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onHide', function (e) {
+    clearInterval(timer);
+  });
+  Object(_remax_runtime__WEBPACK_IMPORTED_MODULE_0__["usePageEvent"])('onShow', function (e) {
+    get();
   });
   /**
    * 答案的选择
@@ -790,7 +795,7 @@ var defaultQuestionTime = 15;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/blackoy/Desktop/xiaochengxu21/question/src/pages/index/index.entry.js */"./src/pages/index/index.entry.js");
+module.exports = __webpack_require__(/*! E:\IdeaProjects\xiaochengxu\question\src\pages\index\index.entry.js */"./src/pages/index/index.entry.js");
 
 
 /***/ })

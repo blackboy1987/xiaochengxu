@@ -3,18 +3,17 @@ package com.bootx;
 import com.bootx.app.chengyu.entity.Idiom;
 import com.bootx.app.chengyu.entity.Word;
 import com.bootx.util.JsonUtils;
-import com.bootx.util.WebUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Demo {
@@ -161,6 +160,40 @@ public class Demo {
                 "0" +
                 ");";
 
+    public static void main1() {
+        String word = "毫无疑义";
+        char[] chars = word.toCharArray();
+        System.out.println(chars.length);
         return sql;
+    }
+
+    public static void main(String[] args) {
+        for (int i=0;i<100;i++){
+            System.out.println("========================================================================================"+i);
+            remove();
+        }
+
+    }
+
+
+    private static void remove(){;
+        String endpoint = "oss-cn-hangzhou.aliyuncs.com";
+        String accessKeyId = "LTAI4GCjrkxGi8rcyoiy6i8Y";
+        String accessKeySecret = "AEG4gBrjvNQvSJRSStrZfHfC4EJZOW";
+        // 创建OSSClient实例。
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        // 列举文件。如果不设置KeyPrefix，则列举存储空间下的所有文件。如果设置KeyPrefix，则列举包含指定前缀的文件。
+        ListObjectsV2Result result = ossClient.listObjectsV2("bootx-video");
+        List<OSSObjectSummary> ossObjectSummaries = result.getObjectSummaries();
+        List<String> keys = new ArrayList<>();
+        for (OSSObjectSummary s : ossObjectSummaries) {
+            keys.add(s.getKey());
+        }
+
+        DeleteObjectsResult deleteObjectsResult = ossClient.deleteObjects(new DeleteObjectsRequest("bootx-video").withKeys(keys));
+        List<String> deletedObjects = deleteObjectsResult.getDeletedObjects();
+        deletedObjects.forEach(item-> System.out.println("result:"+item));
+
+        ossClient.shutdown();
     }
 }

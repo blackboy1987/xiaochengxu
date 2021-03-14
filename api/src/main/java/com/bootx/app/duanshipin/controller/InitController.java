@@ -21,8 +21,8 @@ public class InitController {
 
 
     @GetMapping
-    public Result category(Integer start, Integer end){
-        shortVideoService.sync(start,end);
+    public Result category(Integer start, Integer end,String categoryId){
+        shortVideoService.sync(start,end,categoryId);
 
         return Result.error("ok");
 

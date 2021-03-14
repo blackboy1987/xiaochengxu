@@ -4,10 +4,10 @@ import {usePageEvent} from 'remax/macro';
 // @ts-ignore
 import classNames from 'classnames';
 import './index.css';
-import {getUserInfo, post} from "@/util/wxUtils";
+import {getStorage, getUserInfo, post, setStorage} from "@/util/wxUtils";
 import {useState} from "react";
-import {defaultUserInfo} from "@/util/constants";
-import {UserInfo} from "@/util/data";
+import {defaultSiteConfig, defaultUserInfo} from "@/util/constants";
+import {SiteConfig, UserInfo} from "@/util/data";
 
 const user = {
     answernum:444,
@@ -28,12 +28,17 @@ const btn = {
 }
 
 
+let timer:NodeJS.Timeout;
+
 export default () => {
 
     const [userInfo,setUserInfo] = useState<UserInfo>(defaultUserInfo);
+    const [siteInfo,setSiteInfo] = useState<SiteConfig>(defaultSiteConfig);
 
     usePageEvent('onLoad',()=>{
-        getUserInfo(data=>setUserInfo(data))
+        const siteConfig = getStorage('siteInfo');
+        setUserInfo(getStorage("userInfo"));
+        setSiteInfo(siteConfig);
     });
 
     // 分享
@@ -53,6 +58,16 @@ export default () => {
             type:'sign'
         },data=>{
             console.log(data);
+            if(data==='ok'){
+                setUserInfo({
+                    ...userInfo,
+                    isSign:true,
+                });
+                setStorage("userInfo",{
+                    ...userInfo,
+                    isSign:true,
+                });
+            }
         })
     }
 
@@ -123,11 +138,11 @@ export default () => {
                                 <Button
                                     className={classNames(
                                         'btn',
-                                        user.ad_video_num>=sysinfo.sys_ad_video_watchnum?'disabled':''
+                                        user.ad_video_num>=siteInfo.config.dayRewardedVideoAdCount?'disabled':''
                                     )}
-                                    disabled={user.ad_video_num>=sysinfo.sys_ad_video_watchnum}
+                                    disabled={user.ad_video_num>=siteInfo.config.dayRewardedVideoAdCount}
                                 >
-                                    观看({user.ad_video_num}/{sysinfo.sys_ad_video_watchnum})
+                                    观看({user.ad_video_num}/{siteInfo.config.dayRewardedVideoAdCount})
                                 </Button>
                             )
                         }

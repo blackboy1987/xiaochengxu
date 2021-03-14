@@ -30,6 +30,11 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
+  {
+    path: '/apply',
+    component: './apply',
+    hideInMenu: true,
+  },
   ...movie,
   ...answer,
   ...question,

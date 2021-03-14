@@ -12,7 +12,7 @@ import com.bootx.service.BaseService;
  */
 public interface ShortVideoService extends BaseService<ShortVideo,Long> {
 
-    void sync(Integer start,Integer end);
+    void sync(Integer start,Integer end,String categoryId);
     boolean sync1(Long videoId);
 
     boolean exist(String videoId);

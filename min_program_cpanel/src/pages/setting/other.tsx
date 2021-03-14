@@ -1,5 +1,5 @@
 import {PageContainer} from "@ant-design/pro-layout";
-import {Button, Card, Col, Form, Input, InputNumber, message, Row, Select} from "antd";
+import {Button, Card, Col, Form, Input, message, Row} from "antd";
 import {useEffect, useState} from "react";
 import {config, configUpdate} from "@/pages/setting/service";
 
@@ -47,20 +47,11 @@ const Base=()=>{
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                label="签到奖励（积分）"
+                label="签到奖励（答题卡）"
                 name="signPoint"
                 rules={[{ required: true, message: '必填' }]}
               >
-                <InputNumber min={0} step={1} precision={2} style={{width:'100%'}} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="签到奖励（红包）"
-                name="signBalance"
-                rules={[{ required: true, message: '必填' }]}
-              >
-                <InputNumber min={0} step={1} precision={2} style={{width:'100%'}} />
+                <Input addonAfter='张' />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -69,7 +60,7 @@ const Base=()=>{
                 name="signBalance"
                 rules={[{ required: true, message: '必填' }]}
               >
-                <InputNumber min={0} step={1} precision={0} style={{width:'100%'}} />
+                <Input addonAfter='秒' />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -78,7 +69,7 @@ const Base=()=>{
                 name="signBalance"
                 rules={[{ required: true, message: '必填' }]}
               >
-                <InputNumber min={0} step={1} precision={0} style={{width:'100%'}} />
+                <Input addonAfter='秒' />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -87,7 +78,7 @@ const Base=()=>{
                 name="signBalance"
                 rules={[{ required: true, message: '必填' }]}
               >
-                <InputNumber min={0} step={1} precision={0} style={{width:'100%'}} />
+                <Input addonAfter='秒' />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -96,16 +87,17 @@ const Base=()=>{
                 name="signBalance"
                 rules={[{ required: true, message: '必填' }]}
               >
-                <InputNumber min={0} step={1} precision={0} style={{width:'100%'}} />
+                <Input addonAfter='秒' />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
                 label="激励视频间隔"
-                name="signBalance"
+                name="videoInterval"
                 rules={[{ required: true, message: '必填' }]}
+                initialValue={120}
               >
-                <InputNumber min={0} step={1} precision={0} style={{width:'100%'}} />
+                <Input addonAfter='秒' />
               </Form.Item>
             </Col>
             <Col span={12}>

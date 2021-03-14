@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController("apiLoginController")
-@RequestMapping("/api/login")
+@RequestMapping("/login")
 public class LoginController extends BaseController {
 
     @Resource
@@ -37,7 +37,7 @@ public class LoginController extends BaseController {
         }
 
         App app = appService.findByUsername(username);
-        if(app==null||!app.isValidCredentials(password)){
+        if(app==null||!app.getAdmin().isValidCredentials(password)){
             data.put("status","error");
             data.put("msg","用户名或密码错误");
             return Result.error(-1,"用户名或密码错误",data);
