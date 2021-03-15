@@ -15,9 +15,7 @@
         </view>
         <view class="main">
             <view catchtap="closeHuodong" class="view-notice" wx:if="{{notice}}">
-                <i-notice-bar loop color="#ed3f14" icon="systemprompt" speed="1200">
-          {{notice}}
-        </i-notice-bar>
+                <i-notice-bar loop color="#ed3f14" icon="systemprompt" speed="1200">{{notice}}</i-notice-bar>
             </view>
             <image catchtap="duanweiFun" class="mainImg" mode="aspectFit" src="{{rank_img}}"></image>
             <view class="duanwei">{{value_name}}</view>
