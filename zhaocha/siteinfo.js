@@ -4,7 +4,7 @@ module.exports = {
     acid: "4",
     multiid: "0",
     version: "1.15",
-    appCode:'',
-    appToken:'',
-    siteroot: "https://www.love2021.cn/app/index.php"
+    // siteroot: "https://www.love2021.cn/app/index.php"
+    siteroot: "http://localhost:9001/api/zhaocha",
+    resourceroot: "https://www.love2021.cn/app/index.php"
 };

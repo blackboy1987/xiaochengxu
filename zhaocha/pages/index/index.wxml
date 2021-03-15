@@ -63,21 +63,21 @@
             <view class="btns" wx:if="{{flag_load}}">
                 <view class="btnCon" wx:if="{{!config.hook}}">
                     <button bindgetuserinfo="wxUserInfo" class="getuser" openType="getUserInfo" wx:if="{{getuser}}"></button>
-                    <image catchtap="gift" class="btnImg" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/gift.png"></image>
+                    <image catchtap="gift" class="btnImg" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/gift.png"></image>
                 </view>
                 <view class="btnCon" wx:if="{{!config.hook}}">
                     <button bindgetuserinfo="wxUserInfo" class="getuser" openType="getUserInfo" wx:if="{{getuser}}"></button>
-                    <image catchtap="rankFun" class="btnImg" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/paihang.png"></image>
+                    <image catchtap="rankFun" class="btnImg" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/paihang.png"></image>
                 </view>
                 <view class="btnCon">
-                    <image catchtap="settingFun" class="btnImg" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/setting.png"></image>
+                    <image catchtap="settingFun" class="btnImg" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/setting.png"></image>
                 </view>
                 <view class="btnCon pk" wx:if="{{flag_load}}">
                     <button catchtap="pkBtn" formType="submit" wx:if="{{!getuser}}">
                         <image class="btnImg" src="/images/pk.png"></image>
                     </button>
                     <button bindgetuserinfo="wxUserInfo" openType="getUserInfo" wx:if="{{getuser}}">
-                        <image class="btnImg" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/pk.png"></image>
+                        <image class="btnImg" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/pk.png"></image>
                     </button>
                 </view>
             </view>
@@ -396,7 +396,7 @@
     </view>
     <view bindtap="toggleMoreGame" class="more-game" hoverClass="btn-click" hoverStartTime="0" hoverStayTime="100" style="top:{{notice?'352rpx':''}}" wx:if="{{moreGameList.length}}">
         <image class="more-game-text" src="/images/more.png"></image>
-        <image class="more-game-img" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/yxjs-gdyx.png"></image>
+        <image class="more-game-img" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/yxjs-gdyx.png"></image>
     </view>
     <popupMoreGame bind:close="toggleMoreGame" bindtoGame="toGameSubscribe" isShowDetention="{{isShowDetention}}" list="{{moreGameList}}" shareResult="{{shareResult}}" shareVideoRule="{{adunit}}" wx:if="{{showMoreGamePopup}}"></popupMoreGame>
     <view class="leftMoreGame">

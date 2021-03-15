@@ -43,14 +43,14 @@ Page({
         moreGameList: [],
         adunit: {},
         rank_list: []
-    }, _defineProperty(_data, "scrollId", "list-scroll-item1"), _defineProperty(_data, "userinfo", {}), 
-    _defineProperty(_data, "leftMoreGame", []), _defineProperty(_data, "rightMoreGame", []), 
+    }, _defineProperty(_data, "scrollId", "list-scroll-item1"), _defineProperty(_data, "userinfo", {}),
+    _defineProperty(_data, "leftMoreGame", []), _defineProperty(_data, "rightMoreGame", []),
     _defineProperty(_data, "rewards", {
         show: 0,
         list: []
-    }), _defineProperty(_data, "money", 0), _defineProperty(_data, "yf_submit", 1), 
-    _defineProperty(_data, "siteInfo", require("../../siteinfo.js")), _defineProperty(_data, "huodongImg", ""), 
-    _defineProperty(_data, "huodongStatus", 0), _defineProperty(_data, "kefuWeixin", ""), 
+    }), _defineProperty(_data, "money", 0), _defineProperty(_data, "yf_submit", 1),
+    _defineProperty(_data, "siteInfo", require("../../siteinfo.js")), _defineProperty(_data, "huodongImg", ""),
+    _defineProperty(_data, "huodongStatus", 0), _defineProperty(_data, "kefuWeixin", ""),
     _defineProperty(_data, "showAd", !0), _data),
     toggleMoreGame: function() {
         this.setData({
@@ -78,11 +78,19 @@ Page({
             open_date: a.open_date,
             toastCtrol: 5
         }), t.wxLogin(function(a) {
-            var e, o = s, i = a.data.data;
-            console.log("用户当前的uid是：" + i.uid), wx.removeStorageSync("customs"), wx.removeStorageSync("token"), 
-            wx.removeStorageSync("value"), wx.setStorageSync("customs", parseInt(i.customs)), 
-            wx.setStorageSync("token", i.token), wx.setStorageSync("value", parseInt(i.value)), 
-            wx.setStorageSync("ticket", i.ticket), t.globalData.token = i.token, t.globalData.userInfo && o.setData({
+            var e, o = s, i = a.data;
+            console.log("a.data",i);
+            console.log("用户当前的uid是：" + i.uid);
+            wx.removeStorageSync("customs");
+            wx.removeStorageSync("token");
+            wx.removeStorageSync("value");
+            wx.setStorageSync("customs", parseInt(i.customs));
+            wx.setStorageSync("token", i.token);
+            wx.setStorageSync("value", parseInt(i.value));
+            wx.setStorageSync("ticket", i.ticket);
+            t.globalData.token = i.token;
+
+            t.globalData.userInfo && o.setData({
                 userInfo: t.globalData.userInfo
             }), 1 == i.first_login && wx.showModal({
                 title: "提示",
@@ -111,11 +119,11 @@ Page({
                 value_name: i.value_name,
                 rank: i.rank,
                 is_userinfo: i.is_userinfo
-            }, "uid", i.uid), _defineProperty(e, "will_title", i.will_title), _defineProperty(e, "rank_img", i.rank_img), 
-            _defineProperty(e, "rank_name_img", i.rank_name_img), _defineProperty(e, "sign_alert", i.sign_alert), 
-            e)), o.join_paiwei(n), t.globalData.open_sound = i.open_sound, t.globalData.rank = i.rank, 
-            t.globalData.gold = i.gold, o.data.ticket < o.data.config.ticket_max ? (clearInterval(o.data.timer), 
-            o.getSurplusTime()) : o.data.ticket == o.data.config.ticket_max && clearInterval(o.data.timer), 
+            }, "uid", i.uid), _defineProperty(e, "will_title", i.will_title), _defineProperty(e, "rank_img", i.rank_img),
+            _defineProperty(e, "rank_name_img", i.rank_name_img), _defineProperty(e, "sign_alert", i.sign_alert),
+            e)), o.join_paiwei(n), t.globalData.open_sound = i.open_sound, t.globalData.rank = i.rank,
+            t.globalData.gold = i.gold, o.data.ticket < o.data.config.ticket_max ? (clearInterval(o.data.timer),
+            o.getSurplusTime()) : o.data.ticket == o.data.config.ticket_max && clearInterval(o.data.timer),
             0 == i.is_userinfo ? o.setData({
                 getuser: 1
             }) : o.setData({
@@ -340,7 +348,7 @@ Page({
                         will_title: e.will_title
                     }), t.globalData.ticket = e.ticket, t.globalData.gold = e.gold, o.data.ticket == o.data.config.ticket_max ? (o.setData({
                         resTime: "已满"
-                    }), clearInterval(o.data.timer)) : 0 == e.residue_time ? (clearInterval(o.data.timer), 
+                    }), clearInterval(o.data.timer)) : 0 == e.residue_time ? (clearInterval(o.data.timer),
                     o.getTimeTicket(o.data.timer)) : (clearInterval(o.data.timer), o.setData({
                         residue_time: e.residue_time,
                         timer: null
@@ -366,7 +374,7 @@ Page({
                     var e = a.data.data;
                     clearInterval(i.data.timer), clearInterval(o), i.setData({
                         ticket: e.ticket
-                    }), t.globalData.ticket = e.ticket, 1 == e.status ? i.data.ticket < i.data.config.ticket_max ? i.getSurplusTime() : (clearInterval(i.data.timer), 
+                    }), t.globalData.ticket = e.ticket, 1 == e.status ? i.data.ticket < i.data.config.ticket_max ? i.getSurplusTime() : (clearInterval(i.data.timer),
                     i.setData({
                         resTime: "已满"
                     })) : 2 == e.status && (clearInterval(i.data.timer), i.data.ticket < i.data.config.ticket_max ? (i.setData({
@@ -470,7 +478,7 @@ Page({
                 excitation: 0
             });
         }), a.onClose(function(t) {
-            t && t.isEnded || void 0 === t ? (console.log("看视频获取体力/金币" + o.data.typeName), "vedioEng" == o.data.typeName && e.getVedioEng(), 
+            t && t.isEnded || void 0 === t ? (console.log("看视频获取体力/金币" + o.data.typeName), "vedioEng" == o.data.typeName && e.getVedioEng(),
             "vedioGold" == o.data.typeName && e.getVedioGold(), "vedioPK" == o.data.typeName && wx.navigateTo({
                 url: "../paiwei/paiwei?t=1"
             }), "vedioJoinPK" == o.data.typeName && o.paiwei({
@@ -515,7 +523,7 @@ Page({
             },
             success: function(a) {
                 var e = a.data;
-                200 == e.code ? (wx.setStorageSync("userInfo", a.data.data), t.globalData.userInfo = a.data.data, 
+                200 == e.code ? (wx.setStorageSync("userInfo", a.data.data), t.globalData.userInfo = a.data.data,
                 n.setData({
                     userInfo: a.data.data
                 }), "function" == typeof o && o()) : (wx.showToast({
@@ -613,8 +621,8 @@ Page({
                 game_time: 100,
                 down_time: 20
             };
-            a.share_img = t.globalData.siteroot + "/attachment/aaa_zhaocha_resource/images/service_img.png", 
-            a.share_title = "快来找不同", a.service_img = t.globalData.siteroot + "/attachment/aaa_zhaocha_resource/service_img.png", 
+            a.share_img = t.globalData.siteroot + "/attachment/aaa_zhaocha_resource/images/service_img.png",
+            a.share_title = "快来找不同", a.service_img = t.globalData.siteroot + "/attachment/aaa_zhaocha_resource/service_img.png",
             a.service_title = "点击领取", this.setData({
                 config: a
             });
@@ -637,8 +645,8 @@ Page({
                                 duration: 1e3
                             });
                         }
-                    }), t.globalData.name = e.name, t.globalData.logo = e.logo, t.globalData.siteroot = e.cdn, 
-                    t.globalData.seo = e.seo, console.log("t.globalData.siteroot", t.globalData.siteroot), 
+                    }), t.globalData.name = e.name, t.globalData.logo = e.logo, t.globalData.siteroot = e.cdn,
+                    t.globalData.seo = e.seo, console.log("t.globalData.siteroot", t.globalData.siteroot),
                     o.setData({
                         seo: e.seo,
                         yf_show: e.yf_show,
@@ -663,7 +671,7 @@ Page({
                         o.setData({
                             huodongStatus: 1
                         });
-                    }, 1e3), o.checkVideo(), wx.setStorageSync("ticket_max", a.data.data.ticket_max), 
+                    }, 1e3), o.checkVideo(), wx.setStorageSync("ticket_max", a.data.data.ticket_max),
                     t.globalData.config = a.data.data;
                 }
             },
@@ -700,7 +708,7 @@ Page({
     },
     onShareTimeline: function() {
         var t = this.data.config, a = {};
-        return a.title = t.pyq_title, t.pyq_image.length && (a.imageUrl = t.pyq_image), 
+        return a.title = t.pyq_title, t.pyq_image.length && (a.imageUrl = t.pyq_image),
         t.pyq_vars.length && (a.query = t.pyq_vars), a;
     },
     onShareAppMessage: function(a) {
@@ -708,8 +716,8 @@ Page({
             toastCtrol: 0
         });
         var e = "";
-        null != a.target && ("体力" == a.target.dataset.other && wx.setStorageSync("shareCtrol", 1), 
-        "金币" == a.target.dataset.other && wx.setStorageSync("coinCtrol", 1), e = a.target.dataset.other), 
+        null != a.target && ("体力" == a.target.dataset.other && wx.setStorageSync("shareCtrol", 1),
+        "金币" == a.target.dataset.other && wx.setStorageSync("coinCtrol", 1), e = a.target.dataset.other),
         console.log("other", e), t.sharePublic(e);
         var o = {
             title: this.data.config.share_title,
@@ -767,7 +775,7 @@ Page({
         }), !this.data.hasOnShow) {
             this.setData({
                 hasOnShow: !0
-            }), 1 == wx.getStorageSync("coinCtrol") && (wx.removeStorageSync("coinCtrol"), this.getShareCoin(this.data.box_id)), 
+            }), 1 == wx.getStorageSync("coinCtrol") && (wx.removeStorageSync("coinCtrol"), this.getShareCoin(this.data.box_id)),
             1 == wx.getStorageSync("shareCtrol") && (wx.removeStorageSync("shareCtrol"), this.getShareEng());
             var e = wx.getStorageSync("ticket_max") ? wx.getStorageSync("ticket_max") : 7;
             this.data.ticket < e ? clearInterval(this.data.timer) : this.data.ticket == e && clearInterval(this.data.timer);

@@ -101,16 +101,13 @@ util.base64_encode = function(e) {
             wx.removeStorageSync(u);
         }
     }
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",i);
     wx.request((_defineProperty(e = {
         url: i,
         data: a.data ? a.data : {},
         header: a.header ? a.header : {},
         method: a.method ? a.method : "GET"
     }, "header", {
-        "content-type": "application/x-www-form-urlencoded",
-        "appCode": "appCode",
-        "appToken": "appToken",
+        "content-type": "application/x-www-form-urlencoded"
     }), _defineProperty(e, "success", function(e) {
         if (wx.hideNavigationBarLoading(), wx.hideLoading(), e.data.errno) {
             if ("41009" == e.data.errno) return wx.setStorageSync("userInfo", ""), void util.getUserInfo(function() {

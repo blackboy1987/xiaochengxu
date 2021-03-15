@@ -2,7 +2,7 @@
     <view class="popup-container {{isList?'list':'normal'}}" style="width:{{width}}rpx;margin-top:{{top}}rpx;">
         <slot></slot>
         <view bindtap="close" class="close-btn-container" hoverClass="btn-click" hoverStartTime="0" hoverStayTime="100" wx:if="{{!notShowClose}}">
-            <image class="close-btn" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/cyjs-defauit-fh@2x.png"></image>
+            <image class="close-btn" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/cyjs-defauit-fh@2x.png"></image>
         </view>
     </view>
     <view class="page-bottom" wx:if="{{showBanner}}">

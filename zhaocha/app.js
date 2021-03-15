@@ -4,9 +4,9 @@ if ("qq" == modelInfo.AppPlatform) var ald = require("./utils/qq/ald-stat.js");
 
 App({
     onLaunch: function(t) {
-        this.globalData.userInfo = wx.getStorageSync("userInfo") || null, this.globalData.openid = wx.getStorageSync("openid") || "", 
-        this.globalData.uid = wx.getStorageSync("uid") || "", this.globalData.scene = t.scene || "", 
-        this.globalData.code = wx.getStorageSync("code") || "", this.globalData.inviter_id = t.query.inviter_id || 0, 
+        this.globalData.userInfo = wx.getStorageSync("userInfo") || null, this.globalData.openid = wx.getStorageSync("openid") || "",
+        this.globalData.uid = wx.getStorageSync("uid") || "", this.globalData.scene = t.scene || "",
+        this.globalData.code = wx.getStorageSync("code") || "", this.globalData.inviter_id = t.query.inviter_id || 0,
         this.globalData.from = t.query.from || "";
     },
     onShow: function(t) {
@@ -32,7 +32,9 @@ App({
         ticket: 0,
         gold: 0,
         uid: "",
-        seo: {}
+        seo: {},
+        appCode:'IEC3OARSJZAB4SG3YX',
+        appToken:'yxb1123588b8c311c661e2e2f6bff63195fb1932809403507e67044dfadaf741',
     },
     wxLogin: function(o, t) {
         var e = this;
@@ -47,20 +49,24 @@ App({
                         appid: e.globalData.appid,
                         cps_appid: e.globalData.cps_appid
                     };
+                    // 登录
                     wx.setStorageSync("code", t.code), e.globalData.code = t.code, wx.request({
                         url: e.getApiUrl("/User/login"),
                         header: {
                             "content-type": "application/x-www-form-urlencoded",
-                            Accept: "application/json"
+                            Accept: "application/json",
+                            "appCode": e.globalData.appCode,
+                            "appToken": e.globalData.appToken
                         },
                         data: a,
                         method: "POST",
                         success: function(t) {
+                            console.log(t,"wxLogin");
                             if (200 == t.data.code) {
-                                var a = t.data.data;
-                                wx.setStorageSync("user_info", t), wx.setStorageSync("openid", a.openid), e.globalData.openid = a.openid, 
-                                wx.setStorageSync("token", a.token), e.globalData.token = a.token, wx.setStorageSync("uid", a.uid), 
-                                e.globalData.uid = a.uid, wx.setStorageSync("ticket", a.ticket), e.globalData.ticket = a.ticket, 
+                                var a = t.data;
+                                wx.setStorageSync("user_info", t), wx.setStorageSync("openid", a.openid), e.globalData.openid = a.openid,
+                                wx.setStorageSync("token", a.token), e.globalData.token = a.token, wx.setStorageSync("uid", a.uid),
+                                e.globalData.uid = a.uid, wx.setStorageSync("ticket", a.ticket), e.globalData.ticket = a.ticket,
                                 "function" == typeof o && o(t);
                             }
                         },
@@ -74,11 +80,11 @@ App({
         });
     },
     countDownTrue: function() {
-        this.globalData.open_sound && (this.globalData.musicCommon.src = this.globalData.siteroot + "/attachment/aaa_zhaocha_resource/music/countDown.mp3", 
+        this.globalData.open_sound && (this.globalData.musicCommon.src = this.globalData.siteroot + "/attachment/aaa_zhaocha_resource/music/countDown.mp3",
         this.globalData.musicCommon.play());
     },
     btnSoundTrue: function() {
-        this.globalData.open_sound && (this.globalData.musicCommon.src = this.globalData.siteroot + "/attachment/aaa_zhaocha_resource/music/btnSound.mp3", 
+        this.globalData.open_sound && (this.globalData.musicCommon.src = this.globalData.siteroot + "/attachment/aaa_zhaocha_resource/music/btnSound.mp3",
         this.globalData.musicCommon.play());
     },
     sharePublic: function() {
@@ -125,6 +131,7 @@ App({
         });
     },
     getData: function(t) {
+        const {globalData} = this;
         var a = t.split("/"), o = this.util.request_url({
             url: "entry/wxapp/" + a[a.length - 1]
         }), e = 1 < arguments.length && void 0 !== arguments[1] && arguments[1], n = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : [], i = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : {};
@@ -132,7 +139,12 @@ App({
             "content-type": "application/json"
         } : {}, wx.request({
             url: o,
-            header: e,
+            header: {
+                ...e,
+                "appCode": globalData.appCode,
+                "appToken": globalData.appToken,
+                "token":wx.getStorageSync("token"),
+            },
             data: n,
             success: function(t) {
                 "function" == typeof i.success && i.success(t);
@@ -146,6 +158,7 @@ App({
         });
     },
     postData: function(t) {
+        const {globalData} = this;
         var a = t.split("/"), o = this.util.request_url({
             url: "entry/wxapp/" + a[a.length - 1]
         }), e = 1 < arguments.length && void 0 !== arguments[1] && arguments[1], n = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : [], i = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : {};
@@ -154,7 +167,12 @@ App({
             Accept: "application/json"
         } : {}, wx.request({
             url: o,
-            header: e,
+            header: {
+                ...e,
+                "appCode": globalData.appCode,
+                "appToken": globalData.appToken,
+                "token":wx.getStorageSync("token"),
+            },
             data: n,
             method: "POST",
             success: function(t) {

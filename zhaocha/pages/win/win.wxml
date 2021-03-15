@@ -98,7 +98,7 @@
 </view>
 <view bindtap="toggleMoreGame" class="more-game" hoverClass="btn-click" hoverStartTime="0" hoverStayTime="100" wx:if="{{appConfig.moregame.length}}">
     <image class="more-game-text" src="/images/more.png"></image>
-    <image class="more-game-img" src="{{fn.baseurl(siteInfo.siteroot)}}/addons/aaa_zhaocha/resource/images/yxjs-gdyx.png"></image>
+    <image class="more-game-img" src="{{fn.baseurl(siteInfo.resourceroot)}}/addons/aaa_zhaocha/resource/images/yxjs-gdyx.png"></image>
 </view>
 <popupMoreGame bind:close="toggleMoreGame" bindtoGame="toGame" isShowDetention="{{isShowDetention}}" list="{{appConfig.moregame}}" shareResult="{{shareResult}}" shareVideoRule="{{appConfig.adunit}}" wx:if="{{showMoreGamePopup}}"></popupMoreGame>
 <view class="leftMoreGame">
