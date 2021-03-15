@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @RestController("apiDemoController")
 @RequestMapping("/demo")
@@ -39,6 +41,7 @@ public class DemoController {
     @GetMapping
     public List<String> init(Integer start) throws InterruptedException {
         String key="post2_";
+        Executor threadPool = Executors.newFixedThreadPool(8);
         // 37902
         List<String> list = new ArrayList<>();
         for (int i=start;i<start+100000;i++) {
@@ -54,7 +57,8 @@ public class DemoController {
                 continue;
             }
             int finalI = i;
-            new Thread(()->{
+
+            threadPool.execute(() -> {
                 String sql = Demo.getSql(finalI);
                 if(StringUtils.isNotBlank(sql)){
                     list.add(sql);
@@ -69,7 +73,7 @@ public class DemoController {
                     redisService.set(key+ finalI, "123");
                     System.out.println(finalI+"================no");
                 }
-            }).start();
+            });
         }
         return list;
     }
