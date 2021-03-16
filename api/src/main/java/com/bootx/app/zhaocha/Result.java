@@ -53,22 +53,22 @@ public class Result implements Serializable {
         this.data = data;
     }
 
-    public static com.bootx.common.Result success(String msg, Object data) {
-        return new com.bootx.common.Result(0, msg, data);
+    public static Result success(String msg, Object data) {
+        return new Result(0, msg, data);
     }
 
-    public static com.bootx.common.Result success(Object data) {
-        return new com.bootx.common.Result(0, "成功", data);
+    public static Result success(Object data) {
+        return new Result(0, "成功", data);
     }
 
-    public static com.bootx.common.Result error(String msg) {
-        return new com.bootx.common.Result(-1, msg, null);
+    public static Result error(String msg) {
+        return new Result(-1, msg, null);
     }
 
-    public static com.bootx.common.Result error(Integer code, String msg) {
-        return new com.bootx.common.Result(code, msg, null);
+    public static Result error(Integer code, String msg) {
+        return new Result(code, msg, null);
     }
-    public static com.bootx.common.Result error(Integer code, String msg, Object data) {
-        return new com.bootx.common.Result(code, msg, data);
+    public static Result error(Integer code, String msg, Object data) {
+        return new Result(code, msg, data);
     }
 }

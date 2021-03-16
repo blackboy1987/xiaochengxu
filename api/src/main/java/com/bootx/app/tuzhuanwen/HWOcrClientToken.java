@@ -114,7 +114,6 @@ public class HWOcrClientToken {
 	}
 
 	private void RefreshToken() throws InterruptedException, IOException, URISyntaxException {
-		System.out.println("Token expired, refresh.");
 		token = "";
 		GetToken();
 	}
@@ -153,17 +152,14 @@ public class HWOcrClientToken {
 					if (retryTimes < RETRY_MAX_TIMES) {
 						retryTimes++;
 						String content = IOUtils.toString(response.getEntity().getContent());
-						System.out.println(content);
 						token = "";
 						Thread.sleep(POLLING_INTERVAL);    //sleep 2s
 						continue;
 					}else {
 						token = "";
-						System.out.println("Failed to obtain the token.");
 						return;
 					}
 				} else {
-						System.out.println("Token obtained successfully.");
 						Header[] xst = response.getHeaders("X-Subject-Token");
 						token = xst[0].getValue();
 						return;
@@ -216,10 +212,8 @@ public class HWOcrClientToken {
 						content.contains(iamTokenFailed)) {
 						RefreshToken();
 						return RequestOcrServiceBase64(uri, imgPath, params);
-					} else {
-						System.out.println(content);
-						return null; 
 					}
+					return null;
 				}
 				return response;
 			} catch (Exception e) {

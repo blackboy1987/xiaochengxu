@@ -1,6 +1,6 @@
 package com.bootx.app.zhaocha.controller;
 
-import com.bootx.common.Result;
+import com.bootx.app.zhaocha.Result;
 import com.bootx.entity.App;
 import com.bootx.member.entity.Member;
 import com.bootx.member.service.MemberService;
@@ -10,6 +10,7 @@ import com.bootx.util.JsonUtils;
 import com.bootx.util.WebUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +29,16 @@ public class IndexController {
     private static final String BASE_URL = "https://www.love2021.cn/app/index.php";
 
     @Resource
+    private JdbcTemplate jdbcTemplate;
+
+    @Resource
     private AppService appService;
 
     @Resource
     private MemberService memberService;
 
     @GetMapping
-    public String get(HttpServletRequest request){
+    public Object get(HttpServletRequest request){
         App app = appService.get(request);
         if(app==null){
             return JsonUtils.toJson(Result.error("非法请求"));
@@ -43,7 +47,7 @@ public class IndexController {
     }
 
     @PostMapping
-    public String post(HttpServletRequest request){
+    public Object post(HttpServletRequest request){
         App app = appService.get(request);
         if(app==null){
             return JsonUtils.toJson(Result.error("非法请求"));
@@ -51,7 +55,7 @@ public class IndexController {
         return doPara(request);
     }
 
-    private String doPara(HttpServletRequest request) {
+    private Object doPara(HttpServletRequest request) {
         String doPara = request.getParameter("do");
 
         if(StringUtils.equalsAnyIgnoreCase("config",doPara)){
@@ -63,13 +67,21 @@ public class IndexController {
         if(StringUtils.equalsAnyIgnoreCase("login",doPara)){
             return login(request.getParameter("code"),request);
         }
-        if(StringUtils.equalsAnyIgnoreCase("config",doPara)){
-            return WebUtils.get(BASE_URL,getPara(request));
+        if(StringUtils.equalsAnyIgnoreCase("start_game",doPara)){
+            return startGame(request);
         }
         if(StringUtils.equalsAnyIgnoreCase("config",doPara)){
             return WebUtils.get(BASE_URL,getPara(request));
         }
         return WebUtils.get(BASE_URL,getPara(request));
+    }
+
+    private Result startGame(HttpServletRequest request) {
+        Map<String,Object> data = new HashMap<>();
+        String question = jdbcTemplate.queryForObject("select content from zhaocha.ims_yf_zhaocha_level where id = 100;", String.class);
+        data.put("question",question);
+        return Result.success(data);
+
     }
 
     private String residueTime(HttpServletRequest request) {
@@ -127,6 +139,19 @@ public class IndexController {
         data.put("user_info",data1);
         data.put("openId",member.getOpenId());
         data.put("uid",member.getId());
+        data.put("residue_time",100);
+        data.put("value",100);
+        data.put("money",member.getBalance());
+        data.put("ticket",5);
+        data.put("gold",10);
+        data.put("service_flag",true);
+        data.put("share_flag",true);
+        data.put("help_flag",true);
+        data.put("rank_img","https://www.love2021.cn/attachment//aaa_zhaocha_resource/images//rank/rank17.png");
+        data.put("rank_name_img","超强王者");
+        data.put("value_name","完成关卡2");
+        data.put("rank",17);
+        data.put("will_title","倔犟寒铁");
         data.put("code",200);
         data.put("token", JWTUtils.create(member.getId()+"",data1));
         return JsonUtils.toJson(data);

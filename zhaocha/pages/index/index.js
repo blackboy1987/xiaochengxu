@@ -79,6 +79,7 @@ Page({
             toastCtrol: 5
         }), t.wxLogin(function(a) {
             var e, o = s, i = a.data;
+            console.log("i",a.data);
             console.log("a.data",i);
             console.log("用户当前的uid是：" + i.uid);
             wx.removeStorageSync("customs");

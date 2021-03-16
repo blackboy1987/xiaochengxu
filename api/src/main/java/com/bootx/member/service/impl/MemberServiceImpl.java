@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
@@ -122,9 +123,10 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 		return super.update(member);
 	}
 
+	@Transactional(readOnly = true)
 	private Member findByAppAndId(App app, Long id) {
 		Member member = find(id);
-		if(member!=null&&member.getAppId()==app.getId()){
+		if(member!=null&& member.getAppId().equals(app.getId())){
 			return member;
 		}
 		return null;

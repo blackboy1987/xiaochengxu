@@ -9,8 +9,14 @@ import com.aliyun.oss.model.OSSObjectSummary;
 import com.bootx.app.chengyu.entity.Idiom;
 import com.bootx.app.chengyu.entity.Word;
 import com.bootx.util.JsonUtils;
+import com.bootx.util.WebUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.URL;
@@ -25,7 +31,6 @@ public class Demo {
         StringBuffer sb = new StringBuffer();
         BufferedReader reader = null;
         try {
-            System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
             int line = 1;
@@ -56,7 +61,6 @@ public class Demo {
         StringBuffer sb = new StringBuffer();
         BufferedReader reader = null;
         try {
-            System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
             int line = 1;
@@ -81,12 +85,88 @@ public class Demo {
         return idioms;
     }
 
+    public static String getSql(Integer id) {
+        String url = "https://www.hnymwl.com/" + id + ".html";
+        String result = WebUtils.get(url, null);
+        if (StringUtils.isBlank(result)) {
+            return "";
+        }
+        Document root = Jsoup.parse(result);
+        String title = "";
+        Elements titles = root.getElementsByClass("midTitle");
+        if (titles != null && titles.size() > 0) {
+            title = titles.first().getElementsByTag("h1").first().text();
+        }
+        Element contentDom = root.getElementById("contentstart");
+        if (contentDom == null) {
+            return "";
+        }
+        Element erphpdown = contentDom.getElementById("erphpdown");
+        if (erphpdown != null) {
+            erphpdown.remove();
+        }
+        Elements ceoAd = contentDom.getElementsByClass("ceo-ad");
+        if (ceoAd != null && ceoAd.size() > 0) {
+            ceoAd.remove();
+        }
+        Elements ceoVideoS = contentDom.getElementsByClass("ceo-video-s");
+        if (ceoVideoS != null && ceoVideoS.size() > 0) {
+            ceoVideoS.remove();
+        }
+        String content = contentDom.html().replace("<!--内页顶部广告位-->  <!--内页顶部广告位-->  ", "");
+        if (StringUtils.isBlank(title)) {
+            return "";
+        }
 
-
-    public static void main1() {
-        String word = "毫无疑义";
-        char[] chars = word.toCharArray();
-        System.out.println(chars.length);
+        String sql = "INSERT INTO cms5.cms_posts (" +
+                "ID, " +
+                "post_author, " +
+                "post_date, " +
+                "post_date_gmt, " +
+                "post_content, " +
+                "post_title, " +
+                "post_excerpt, " +
+                "post_status, " +
+                "comment_status, " +
+                "ping_status, " +
+                "post_password, " +
+                "post_name, " +
+                "to_ping, " +
+                "pinged, " +
+                "post_modified, " +
+                "post_modified_gmt, " +
+                "post_content_filtered, " +
+                "post_parent, guid, " +
+                "menu_order, " +
+                "post_type, " +
+                "post_mime_type, " +
+                "comment_count" +
+                ") VALUES (" +
+                "" + id + ", " +
+                "1, " +
+                "'2021-02-13 23:16:20', " +
+                "'2021-02-13 15:16:20', " +
+                "'" + content + "', " +
+                "'" + title + "', " +
+                "'', " +
+                "'publish', " +
+                "'open', " +
+                "'open', " +
+                "'', " +
+                "'" + title + "', " +
+                "'', " +
+                "'', " +
+                "'2021-02-13 23:16:20', " +
+                "'2021-02-13 15:16:20', " +
+                "''," +
+                " 0, " +
+                "'http://cms.i-gomall.com/?page_id=" + id + "', " +
+                "0, " +
+                "'post', " +
+                "'', " +
+                "0" +
+                ");";
+        return sql;
     }
 
     public static void main(String[] args) {
@@ -98,15 +178,15 @@ public class Demo {
     }
 
 
-    private static void remove(){;
+    private static void remove(){
         String endpoint = "oss-cn-hangzhou.aliyuncs.com";
         String accessKeyId = "LTAI4GCjrkxGi8rcyoiy6i8Y";
         String accessKeySecret = "AEG4gBrjvNQvSJRSStrZfHfC4EJZOW";
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         // 列举文件。如果不设置KeyPrefix，则列举存储空间下的所有文件。如果设置KeyPrefix，则列举包含指定前缀的文件。
-        ListObjectsV2Result result = ossClient.listObjectsV2("bootx-video");
-        List<OSSObjectSummary> ossObjectSummaries = result.getObjectSummaries();
+        ListObjectsV2Result result2 = ossClient.listObjectsV2("bootx-video");
+        List<OSSObjectSummary> ossObjectSummaries = result2.getObjectSummaries();
         List<String> keys = new ArrayList<>();
         for (OSSObjectSummary s : ossObjectSummaries) {
             keys.add(s.getKey());
