@@ -2,6 +2,8 @@ package com.bootx.controller.admin;
 
 import com.bootx.common.Result;
 import com.bootx.entity.App;
+import com.bootx.entity.AppAd;
+import com.bootx.entity.AppConfig;
 import com.bootx.service.AppService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestController("apiAdminAppController")
 @RequestMapping("/api/admin/app")
@@ -61,16 +64,16 @@ public class AppController {
         if(app==null){
             return Result.error("非法访问");
         }
-        return Result.success(app.getAds());
+        return Result.success(app.getAppAd());
     }
 
     @PostMapping("/adsUpdate")
-    public Result adsUpdate(HttpServletRequest request, @RequestBody Map<String, App.AdConfig> ads){
+    public Result adsUpdate(HttpServletRequest request, @RequestBody Map<String, AppAd> ads){
         App app = appService.get1(request);
         if(app==null){
             return Result.error("非法访问");
         }
-        app.setAds(ads);
+        // app.setAppAds(ads);
         appService.update(app);
         return Result.success("操作成功");
     }
@@ -82,7 +85,8 @@ public class AppController {
         if(app==null){
             return Result.error("非法访问");
         }
-        return Result.success(app.getConfig());
+        AppConfig appConfig = app.getAppConfig();
+        return Result.success(appConfig.getConfig());
     }
 
     @PostMapping("/configUpdate")
@@ -91,7 +95,8 @@ public class AppController {
         if(app==null){
             return Result.error("非法访问");
         }
-        app.setConfig(config);
+        AppConfig appConfig = app.getAppConfig();
+        appConfig.setConfig(config);
         appService.update(app);
         return Result.success("操作成功");
     }

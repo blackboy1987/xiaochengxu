@@ -3,6 +3,7 @@ package com.bootx.app.question.controller;
 import com.bootx.app.question.service.SubjectService;
 import com.bootx.common.Result;
 import com.bootx.entity.App;
+import com.bootx.entity.AppConfig;
 import com.bootx.entity.RewardType;
 import com.bootx.member.entity.Member;
 import com.bootx.member.entity.PointLog;
@@ -61,6 +62,7 @@ public class IndexController {
         if(app==null){
             return Result.error("非法请求");
         }
+        AppConfig appConfig = app.getAppConfig();
         Member member = memberService.get(request);
         if(member==null){
             return Result.error("用户不存在");
@@ -80,7 +82,7 @@ public class IndexController {
                 return Result.error("今日已签到，明日再来吧");
             }
             //签到
-            String signPoint = app.getConfig().get("signPoint");
+            String signPoint = appConfig.get("signPoint");
             if(StringUtils.isBlank(signPoint)){
                 signPoint = "100";
             }try {

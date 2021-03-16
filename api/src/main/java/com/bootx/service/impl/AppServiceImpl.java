@@ -7,13 +7,16 @@ import com.bootx.dao.AppDao;
 import com.bootx.entity.App;
 import com.bootx.member.entity.Member;
 import com.bootx.service.AppService;
+import com.bootx.service.RedisService;
 import com.bootx.util.JWTUtils;
+import com.bootx.util.JsonUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +30,25 @@ import java.util.Map;
 @Service
 public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppService {
 
-    @Autowired
+    @Resource
     private AppDao appDao;
+    @Resource
+    private RedisService redisService;
 
     @Override
+    @Transactional(readOnly = true)
     public App findByAppCode(String appCode) {
-        return appDao.find("appCode",appCode);
+        String cacheKey = App.CACHE_PREFIX + appCode;
+        App app = redisService.get(cacheKey, App.class);
+        if(app==null){
+            app = appDao.find("appCode",appCode);
+            redisService.set(cacheKey, JsonUtils.toJson(app));
+        }
+        return app;
     }
 
     @Override
-    public App findByUsername(String username) {
-        return appDao.find("username",username);
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public boolean exist(String appCode, String appSecret) {
         App app = findByAppCode(appCode);
         if(app==null){
@@ -49,8 +57,6 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
         if(!StringUtils.equals(appSecret, app.getAppToken())){
             return false;
         }
-
-
         return true;
     }
 
@@ -65,7 +71,6 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
         if(StringUtils.isBlank(appToken)){
             appToken = request.getParameter("appToken");
         }
-
         App app = findByAppCode(appCode);
         if(app==null||!StringUtils.equals(appToken,app.getAppToken())){
             return null;
@@ -150,4 +155,8 @@ public class AppServiceImpl extends BaseServiceImpl<App, Long> implements AppSer
         return null;
 
     }
+
+
+
+
 }

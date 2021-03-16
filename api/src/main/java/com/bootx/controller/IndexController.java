@@ -2,6 +2,7 @@ package com.bootx.controller;
 
 import com.bootx.common.Result;
 import com.bootx.entity.App;
+import com.bootx.entity.AppConfig;
 import com.bootx.entity.RewardType;
 import com.bootx.member.entity.Member;
 import com.bootx.member.entity.PointLog;
@@ -82,8 +83,8 @@ public class IndexController {
         Map<String,Object> data = new HashMap<>();
         data.put("name",app.getAppName());
         data.put("status",app.getStatus());
-        data.put("ads",app.getAds());
-        data.put("config",app.getConfig());
+        data.put("ads",app.getAppAd().getAds());
+        data.put("config",app.getAppConfig().getConfig());
         return Result.success(data);
     }
 
@@ -138,6 +139,7 @@ public class IndexController {
         if(app==null){
             return Result.error("非法访问");
         }
+        AppConfig appConfig = app.getAppConfig();
         if(!member.getAppId().equals(app.getId())){
             return Result.error("非法访问");
         }
@@ -150,7 +152,7 @@ public class IndexController {
                 return Result.error("今日已签到，明日再来吧");
             }
             //签到
-            String signPoint = app.getConfig().get("signPoint");
+            String signPoint = appConfig.get("signPoint");
             if(StringUtils.isBlank(signPoint)){
                 signPoint = "300";
             }try {
@@ -160,7 +162,7 @@ public class IndexController {
             }
         }else if(RewardType.reviewRewardedVideoAd==type){
             // 浏览视频广告
-            String perVideoGold = app.getConfig().get("perVideoGold");
+            String perVideoGold = appConfig.get("perVideoGold");
             if(StringUtils.isBlank(perVideoGold)){
                 perVideoGold = "2000";
             }try {

@@ -36,21 +36,11 @@ public class LoginController extends BaseController {
             return Result.error(-1,"请输入用户名和密码",data);
         }
 
-        App app = appService.findByUsername(username);
-        if(app==null||!app.getAdmin().isValidCredentials(password)){
-            data.put("status","error");
-            data.put("msg","用户名或密码错误");
-            return Result.error(-1,"用户名或密码错误",data);
-        }
+        App app = null;
+        data.put("status","error");
+        data.put("msg","用户名或密码错误");
+        return Result.error(-1,"用户名或密码错误",data);
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("id",app.getId());
-        map.put("appCode",app.getAppCode());
-        data.put("type",type);
-        data.put("status","ok");
-        data.put("currentAuthority","admin");
-        data.put("token", JWTUtils.create(app.getId()+"",map));
-        return Result.success(data);
     }
 
 

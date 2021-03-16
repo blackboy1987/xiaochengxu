@@ -8,7 +8,9 @@ import com.bootx.app.chengyu.service.IdiomLevelService;
 import com.bootx.app.chengyu.service.IdiomService;
 import com.bootx.app.chengyu.service.WordService;
 import com.bootx.common.Result;
+import com.bootx.entity.AdConfig;
 import com.bootx.entity.App;
+import com.bootx.entity.AppAd;
 import com.bootx.entity.SubscriptionTemplate;
 import com.bootx.service.AppService;
 import com.bootx.service.SubscriptionTemplateService;
@@ -46,12 +48,14 @@ public class InitController {
     public void init(Long id){
         App app = appService.find(2L);
         if(app!=null){
-            Map<String, App.AdConfig> ads = new HashMap<>();
-
+            AppAd appAd = app.getAppAd();
+            if(appAd==null){
+                appAd = new AppAd(app);
+            }
             //首页广告配置
-            App.AdConfig indexAdConfig = ads.get("index");
+            AdConfig indexAdConfig = appAd.getAds().get("index");
             if(indexAdConfig==null){
-                indexAdConfig = new App.AdConfig();
+                indexAdConfig = new AdConfig();
 
             }
             indexAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
@@ -61,11 +65,11 @@ public class InitController {
             indexAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             indexAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             indexAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("index",indexAdConfig);
+            appAd.put("index",indexAdConfig);
 
-            App.AdConfig duihuanAdConfig = ads.get("duihuan");
+            AdConfig duihuanAdConfig = appAd.get("duihuan");
             if(duihuanAdConfig==null){
-                duihuanAdConfig = new App.AdConfig();
+                duihuanAdConfig = new AdConfig();
 
             }
             duihuanAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
@@ -75,11 +79,11 @@ public class InitController {
             duihuanAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             duihuanAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             duihuanAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("duihuan",duihuanAdConfig);
+            appAd.put("duihuan",duihuanAdConfig);
 
-            App.AdConfig gameAdConfig = ads.get("game");
+            AdConfig gameAdConfig = appAd.get("game");
             if(gameAdConfig==null){
-                gameAdConfig = new App.AdConfig();
+                gameAdConfig = new AdConfig();
             }
             gameAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
             gameAdConfig.setGridAdId("adunit-177ef912ea58ca3e");
@@ -88,11 +92,11 @@ public class InitController {
             gameAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             gameAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             gameAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("game",gameAdConfig);
+            appAd.put("game",gameAdConfig);
 
-            App.AdConfig helpAdConfig = ads.get("help");
+            AdConfig helpAdConfig = appAd.get("help");
             if(helpAdConfig==null){
-                helpAdConfig = new App.AdConfig();
+                helpAdConfig = new AdConfig();
             }
             helpAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
             helpAdConfig.setGridAdId("adunit-177ef912ea58ca3e");
@@ -101,11 +105,11 @@ public class InitController {
             helpAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             helpAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             helpAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("help",helpAdConfig);
+            appAd.put("help",helpAdConfig);
 
-            App.AdConfig jinbiAdConfig = ads.get("jinbi");
+            AdConfig jinbiAdConfig = appAd.get("jinbi");
             if(jinbiAdConfig==null){
-                jinbiAdConfig = new App.AdConfig();
+                jinbiAdConfig = new AdConfig();
             }
             jinbiAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
             jinbiAdConfig.setGridAdId("adunit-177ef912ea58ca3e");
@@ -114,11 +118,11 @@ public class InitController {
             jinbiAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             jinbiAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             jinbiAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("jinbi",jinbiAdConfig);
+            appAd.put("jinbi",jinbiAdConfig);
 
-            App.AdConfig moreAdConfig = ads.get("more");
+            AdConfig moreAdConfig = appAd.get("more");
             if(moreAdConfig==null){
-                moreAdConfig = new App.AdConfig();
+                moreAdConfig = new AdConfig();
             }
             moreAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
             moreAdConfig.setGridAdId("adunit-177ef912ea58ca3e");
@@ -127,11 +131,11 @@ public class InitController {
             moreAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             moreAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             moreAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("more",moreAdConfig);
+            appAd. put("more",moreAdConfig);
 
-            App.AdConfig rankAdConfig = ads.get("rank");
+            AdConfig rankAdConfig = appAd.get("rank");
             if(rankAdConfig==null){
-                rankAdConfig = new App.AdConfig();
+                rankAdConfig = new AdConfig();
             }
             rankAdConfig.setBannerId("adunit-5d392fcce4af1bf9");
             rankAdConfig.setGridAdId("adunit-177ef912ea58ca3e");
@@ -140,8 +144,8 @@ public class InitController {
             rankAdConfig.setRewardedVideoAdId("adunit-1eefa901f0b541e0");
             rankAdConfig.setVideoAdId("adunit-1f98f08e663fa1b7");
             rankAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("rank",rankAdConfig);
-            app.setAds(ads);
+            appAd.put("rank",rankAdConfig);
+            app.setAppAd(appAd);
             appService.update(app);
         }
     }

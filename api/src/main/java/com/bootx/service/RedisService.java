@@ -10,4 +10,6 @@ public interface RedisService {
 
     boolean hasKey(String key);
 
+    <T> T get(String key,Class<T> t);
+
 }

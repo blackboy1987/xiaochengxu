@@ -1,8 +1,6 @@
 package com.bootx.app.dianying;
 
-import com.bootx.entity.App;
-import com.bootx.entity.SubscriptionRecord;
-import com.bootx.entity.SubscriptionTemplate;
+import com.bootx.entity.*;
 import com.bootx.service.AppService;
 import com.bootx.service.SubscriptionRecordService;
 import com.bootx.service.SubscriptionTemplateService;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController("initController")
 @RequestMapping("/init")
@@ -35,11 +31,13 @@ public class InitController {
     public void init(Long id){
         App app = appService.find(id);
         if(app!=null){
-            Map<String, App.AdConfig> ads = new HashMap<>();
-            App.AdConfig indexAdConfig = ads.get("index");
+            AppAd appAd = app.getAppAd();
+            if(appAd==null){
+                appAd = new AppAd(app);
+            }
+            AdConfig indexAdConfig = appAd.getAds().get("index");
             if(indexAdConfig==null){
-                indexAdConfig = new App.AdConfig();
-
+                indexAdConfig = new AdConfig();
             }
             indexAdConfig.setBannerId("adunit-a677d814a70242ba");
             indexAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -48,12 +46,11 @@ public class InitController {
             indexAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             indexAdConfig.setVideoAdId("adunit-958e71b940f00867");
             indexAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("index",indexAdConfig);
+            appAd.getAds().put("index",indexAdConfig);
 
-            App.AdConfig detailAdConfig = ads.get("detail");
+            AdConfig detailAdConfig = appAd.getAds().get("detail");
             if(detailAdConfig==null){
-                detailAdConfig = new App.AdConfig();
-
+                detailAdConfig = new AdConfig();
             }
             detailAdConfig.setBannerId("adunit-a677d814a70242ba");
             detailAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -62,11 +59,11 @@ public class InitController {
             detailAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             detailAdConfig.setVideoAdId("adunit-958e71b940f00867");
             detailAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("detail",detailAdConfig);
+            appAd.getAds().put("detail",detailAdConfig);
 
-            App.AdConfig feiLeiAdConfig = ads.get("feiLei");
+            AdConfig feiLeiAdConfig = appAd.getAds().get("feiLei");
             if(feiLeiAdConfig==null){
-                feiLeiAdConfig = new App.AdConfig();
+                feiLeiAdConfig = new AdConfig();
             }
             feiLeiAdConfig.setBannerId("adunit-a677d814a70242ba");
             feiLeiAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -75,11 +72,11 @@ public class InitController {
             feiLeiAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             feiLeiAdConfig.setVideoAdId("adunit-958e71b940f00867");
             feiLeiAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("feiLei",indexAdConfig);
+            appAd.getAds().put("feiLei",feiLeiAdConfig);
 
-            App.AdConfig topicAdConfig = ads.get("topic");
+            AdConfig topicAdConfig = appAd.getAds().get("topic");
             if(topicAdConfig==null){
-                topicAdConfig = new App.AdConfig();
+                topicAdConfig = new AdConfig();
             }
             topicAdConfig.setBannerId("adunit-a677d814a70242ba");
             topicAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -88,11 +85,11 @@ public class InitController {
             topicAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             topicAdConfig.setVideoAdId("adunit-958e71b940f00867");
             topicAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("topic",topicAdConfig);
+            appAd.getAds().put("topic",topicAdConfig);
 
-            App.AdConfig playAdConfig = ads.get("play");
+            AdConfig playAdConfig = appAd.getAds().get("play");
             if(playAdConfig==null){
-                playAdConfig = new App.AdConfig();
+                playAdConfig = new AdConfig();
             }
             playAdConfig.setBannerId("adunit-a677d814a70242ba");
             playAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -101,11 +98,11 @@ public class InitController {
             playAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             playAdConfig.setVideoAdId("adunit-958e71b940f00867");
             playAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("play",playAdConfig);
+            appAd.getAds().put("play",playAdConfig);
 
-            App.AdConfig woDeAdConfig = ads.get("woDe");
+            AdConfig woDeAdConfig = appAd.getAds().get("woDe");
             if(woDeAdConfig==null){
-                woDeAdConfig = new App.AdConfig();
+                woDeAdConfig = new AdConfig();
             }
             woDeAdConfig.setBannerId("adunit-a677d814a70242ba");
             woDeAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -114,11 +111,11 @@ public class InitController {
             woDeAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             woDeAdConfig.setVideoAdId("adunit-958e71b940f00867");
             woDeAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("woDe",woDeAdConfig);
+            appAd.getAds().put("woDe",woDeAdConfig);
 
-            App.AdConfig otherAdConfig = ads.get("other");
+            AdConfig otherAdConfig = appAd.getAds().get("other");
             if(otherAdConfig==null){
-                otherAdConfig = new App.AdConfig();
+                otherAdConfig = new AdConfig();
             }
             otherAdConfig.setBannerId("adunit-a677d814a70242ba");
             otherAdConfig.setGridAdId("adunit-215747ef06bf81a0");
@@ -127,8 +124,9 @@ public class InitController {
             otherAdConfig.setRewardedVideoAdId("adunit-e9566ae9ffbf6ad8");
             otherAdConfig.setVideoAdId("adunit-958e71b940f00867");
             otherAdConfig.setVideoFrontAdId("adunit-03083c87b390182a");
-            ads.put("other",otherAdConfig);
-            app.setAds(ads);
+            appAd.getAds().put("other",otherAdConfig);
+
+            app.setAppAd(appAd);
             appService.update(app);
         }
     }

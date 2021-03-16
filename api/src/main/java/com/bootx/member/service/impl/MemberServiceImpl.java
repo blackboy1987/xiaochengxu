@@ -4,6 +4,7 @@ package com.bootx.member.service.impl;
 import com.bootx.common.Page;
 import com.bootx.common.Pageable;
 import com.bootx.entity.App;
+import com.bootx.entity.AppConfig;
 import com.bootx.entity.RewardType;
 import com.bootx.member.dao.MemberDao;
 import com.bootx.member.dao.MemberDepositLogDao;
@@ -19,6 +20,7 @@ import com.bootx.service.AppService;
 import com.bootx.service.impl.BaseServiceImpl;
 import com.bootx.util.DateUtils;
 import com.bootx.util.JWTUtils;
+import com.bootx.util.JsonUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +70,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 
 	@Override
 	public Member create(Map<String,String> map, App app,Long scene) {
+		AppConfig appConfig = app.getAppConfig();
 		String openId = map.get("openid");
 		String unionid = map.get("unionid");
 		String sessionKey = map.get("session_key");
@@ -81,6 +84,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 		Member member = memberDao.find("openId",openId);
 		if(member==null){
 			Member parent = findByAppAndId(app,scene);
+			System.out.println(JsonUtils.toJson(app));
 			member = new Member();
 			member.setLevel(0);
 			member.setOpenId(openId);
@@ -97,22 +101,20 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
 			member.setMemberRank(memberRankService.findDefault(app));
 
 			try {
-				if(app.getConfig().get("registerRewardPoint")!=null){
-					Long point = Long.valueOf(app.getConfig().get("registerRewardPoint"));
+				if(appConfig.get("registerRewardPoint")!=null){
+					Long point = Long.valueOf(appConfig.get("registerRewardPoint"));
 					member.setPoint(point);
 				}
 			}catch (Exception ignored){
 
 			}
 			try {
-				if(app.getConfig().get("registerRewardBalance")!=null){
-					member.setBalance(new BigDecimal(app.getConfig().get("registerRewardBalance")));
+				if(appConfig.get("registerRewardBalance")!=null){
+					member.setBalance(new BigDecimal(appConfig.get("registerRewardBalance")));
 				}
 			}catch (Exception ignored){
 
 			}
-
-
 			member = super.save(member);
 		}
 		member.setNickName(map.get("name"));

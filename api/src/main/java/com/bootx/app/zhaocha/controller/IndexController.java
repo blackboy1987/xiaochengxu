@@ -102,6 +102,7 @@ public class IndexController {
         Map<String,Object> data = new HashMap<>();
         String url = "https://api.weixin.qq.com/sns/jscode2session";
         App app = appService.get(request);
+        System.out.println(JsonUtils.toJson(app));
         if(app==null){
             return JsonUtils.toJson(Result.error("非法请求"));
         }
@@ -110,6 +111,7 @@ public class IndexController {
         params.put("secret",app.getAppSecret());
         params.put("js_code",code);
         params.put("grant_type","authorization_code");
+        System.out.println(JsonUtils.toJson(app));
         Map<String,String> result = JsonUtils.toObject(WebUtils.get1(url, params), new TypeReference<Map<String, String>>() {});
         Long scene = null;
         try {
@@ -118,6 +120,8 @@ public class IndexController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println(JsonUtils.toJson(app));
+        System.out.println(JsonUtils.toJson(appService.find(app.getId())));
         Member member = memberService.create(result,app,scene);
         Map<String,Object> data1 = memberService.getData(member);
         data.put("user_info",data1);

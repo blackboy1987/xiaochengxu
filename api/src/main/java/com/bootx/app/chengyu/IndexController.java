@@ -3,6 +3,7 @@ package com.bootx.app.chengyu;
 import com.bootx.app.chengyu.service.IdiomLevelService;
 import com.bootx.common.Result;
 import com.bootx.entity.App;
+import com.bootx.entity.AppConfig;
 import com.bootx.member.entity.Member;
 import com.bootx.member.entity.MemberDepositLog;
 import com.bootx.member.entity.PointLog;
@@ -81,7 +82,8 @@ public class IndexController {
         if(!member.getAppId().equals(app.getId())){
             return Result.error("非法访问");
         }
-        String levelPoint = app.getConfig().get("levelPoint");
+        AppConfig appConfig = app.getAppConfig();
+        String levelPoint = appConfig.get("levelPoint");
         if(StringUtil.isBlank(levelPoint)){
             levelPoint = "100";
         }
@@ -115,7 +117,8 @@ public class IndexController {
 
     private Map<Integer,RedPackageConfig> parseRedPackageConfig(App app){
         Map<Integer,RedPackageConfig> map = new HashMap<>();
-        String redPackage = app.getConfig().get("redPackage");
+        AppConfig appConfig = app.getAppConfig();
+        String redPackage = appConfig.get("redPackage");
         if(!StringUtil.isBlank(redPackage)){
             //  解析红包配置数据
             String[] redPackageConfigStrs = redPackage.split(";");

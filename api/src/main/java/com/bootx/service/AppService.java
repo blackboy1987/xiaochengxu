@@ -15,8 +15,6 @@ public interface AppService extends BaseService<App,Long> {
 
     App findByAppCode(String appCode);
 
-    App findByUsername(String username);
-
     boolean exist(String appCode, String appSecret);
 
     App get(HttpServletRequest request);

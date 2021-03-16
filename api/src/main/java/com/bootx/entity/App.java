@@ -1,21 +1,18 @@
 package com.bootx.entity;
 
-import com.bootx.common.BaseAttributeConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class App extends BaseEntity<Long>{
+
+    public static final String CACHE_PREFIX = "app_";
 
     @NotNull
     @Column(nullable = false,updatable = false,unique = true)
@@ -51,6 +48,7 @@ public class App extends BaseEntity<Long>{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(updatable = false)
+    @JsonIgnore
     private Admin admin;
 
     /**
@@ -71,18 +69,11 @@ public class App extends BaseEntity<Long>{
     @Column(nullable = false)
     private Date expireDate;
 
-    @NotNull
-    @Convert(converter = ConfigConfigConvert.class)
-    @Column(length = 3000,nullable = false)
-    private Map<String,String> config = new HashMap<>();
+    @OneToOne(mappedBy = "app", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private AppAd AppAd;
 
-    /**
-     * 广告配置
-     */
-    @NotNull
-    @Convert(converter = AdConfigConvert.class)
-    @Column(length = 3000,nullable = false)
-    private Map<String,AdConfig> ads = new HashMap<>();
+    @OneToOne(mappedBy = "app", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private AppConfig appConfig;
 
     public String getAppId() {
         return appId;
@@ -124,17 +115,6 @@ public class App extends BaseEntity<Long>{
         this.appName = appName;
     }
 
-    public Map<String, AdConfig> getAds() {
-        if(ads==null){
-            ads = new HashMap<>();
-        }
-        return ads;
-    }
-
-    public void setAds(Map<String, AdConfig> ads) {
-        this.ads = ads;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -149,14 +129,6 @@ public class App extends BaseEntity<Long>{
 
     public void setLogo(String logo) {
         this.logo = logo;
-    }
-
-    public Map<String, String> getConfig() {
-        return config;
-    }
-
-    public void setConfig(Map<String, String> config) {
-        this.config = config;
     }
 
 
@@ -184,109 +156,20 @@ public class App extends BaseEntity<Long>{
         this.admin = admin;
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class AdConfig implements Serializable {
-
-        /**
-         * Banner 广告
-         */
-        private String bannerId;
-
-        /**
-         * 激励视频广告
-         */
-        private String rewardedVideoAdId;
-
-        /**
-         * 插屏广告
-         */
-        private String interstitialAdId;
-
-        /**
-         * 视频广告
-         */
-        private String videoAdId;
-
-        /**
-         * 视频前贴广告(视频贴片广告)
-         */
-        private String videoFrontAdId;
-
-        /**
-         * 格子广告
-         */
-        private String gridAdId;
-
-        /**
-         * 原生模板广告
-         */
-        private String nativeAdId;
-
-        public String getBannerId() {
-            return bannerId;
-        }
-
-        public void setBannerId(String bannerId) {
-            this.bannerId = bannerId;
-        }
-
-        public String getRewardedVideoAdId() {
-            return rewardedVideoAdId;
-        }
-
-        public void setRewardedVideoAdId(String rewardedVideoAdId) {
-            this.rewardedVideoAdId = rewardedVideoAdId;
-        }
-
-        public String getInterstitialAdId() {
-            return interstitialAdId;
-        }
-
-        public void setInterstitialAdId(String interstitialAdId) {
-            this.interstitialAdId = interstitialAdId;
-        }
-
-        public String getVideoAdId() {
-            return videoAdId;
-        }
-
-        public void setVideoAdId(String videoAdId) {
-            this.videoAdId = videoAdId;
-        }
-
-        public String getVideoFrontAdId() {
-            return videoFrontAdId;
-        }
-
-        public void setVideoFrontAdId(String videoFrontAdId) {
-            this.videoFrontAdId = videoFrontAdId;
-        }
-
-        public String getGridAdId() {
-            return gridAdId;
-        }
-
-        public void setGridAdId(String gridAdId) {
-            this.gridAdId = gridAdId;
-        }
-
-        public String getNativeAdId() {
-            return nativeAdId;
-        }
-
-        public void setNativeAdId(String nativeAdId) {
-            this.nativeAdId = nativeAdId;
-        }
+    public AppAd getAppAd() {
+        return AppAd;
     }
 
-    @Convert
-    public static class AdConfigConvert extends BaseAttributeConverter<Map<String,AdConfig>>{
-
+    public void setAppAd(AppAd appAd) {
+        AppAd = appAd;
     }
 
-    @Convert
-    public static class ConfigConfigConvert extends BaseAttributeConverter<Map<String,String>>{
+    public AppConfig getAppConfig() {
+        return appConfig;
+    }
 
+    public void setAppConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
     }
 
 }

@@ -1,9 +1,7 @@
 package com.bootx.app.dianying;
 
 import com.bootx.app.dianying.pojo.Demo;
-import com.bootx.entity.App;
-import com.bootx.entity.SubscriptionRecord;
-import com.bootx.entity.SubscriptionTemplate;
+import com.bootx.entity.*;
 import com.bootx.member.entity.Member;
 import com.bootx.member.service.MemberService;
 import com.bootx.service.AppService;
@@ -202,48 +200,48 @@ public class IndexController {
     }
 
     private String getConfig(String result,App app) {
+        AppAd appAd = app.getAppAd();
         Demo demo = JsonUtils.toObject(result,Demo.class);
         demo.getData().setAdmin(app.getAppName());
-        Map<String, App.AdConfig> ads = app.getAds();
-        App.AdConfig indexAdConfig = ads.get("index");
+        AdConfig indexAdConfig = appAd.get("index");
         if(indexAdConfig!=null){
             demo.getData().getIndex().getWxAdId().setYsId(indexAdConfig.getNativeAdId());
             demo.getData().getIndex().getWxAdId().setCpId(indexAdConfig.getInterstitialAdId());
         }
 
-        App.AdConfig detailAdConfig = ads.get("detail");
+        AdConfig detailAdConfig = appAd.get("detail");
         if(detailAdConfig!=null){
             demo.getData().getDetail().getWxAdId().setYsId(detailAdConfig.getNativeAdId());
             demo.getData().getDetail().getWxAdId().setCpId(detailAdConfig.getInterstitialAdId());
             demo.getData().getDetail().getWxAdId().setJlspId(detailAdConfig.getRewardedVideoAdId());
         }
-        App.AdConfig fenLeiAdConfig = ads.get("fenLei");
+        AdConfig fenLeiAdConfig = appAd.get("fenLei");
         if(fenLeiAdConfig!=null){
             demo.getData().getFeilei().getWxAdId().setYsId(fenLeiAdConfig.getNativeAdId());
             demo.getData().getFeilei().getWxAdId().setCpId(fenLeiAdConfig.getInterstitialAdId());
         }
         // demo.getData().getFeilei().getWxAdId().setJlspId("adunit-d06d530e38aaba45");
-        App.AdConfig topicAdConfig = ads.get("topic");
+        AdConfig topicAdConfig = appAd.get("topic");
         if(topicAdConfig!=null){
             demo.getData().getTopic().getWxAdId().setYsId(topicAdConfig.getNativeAdId());
             demo.getData().getTopic().getWxAdId().setCpId(topicAdConfig.getInterstitialAdId());
         }
         //  demo.getData().getTopic().getWxAdId().setJlspId("adunit-d06d530e38aaba45");
-        App.AdConfig playAdConfig = ads.get("play");
+        AdConfig playAdConfig = appAd.get("play");
         if(playAdConfig!=null){
             demo.getData().getPlay().getWxAdId().setYsId(playAdConfig.getNativeAdId());
             demo.getData().getPlay().getWxAdId().setCpId(playAdConfig.getInterstitialAdId());
             demo.getData().getPlay().getWxAdId().setJlspId(playAdConfig.getRewardedVideoAdId());
             demo.getData().getPlay().getWxAdId().setSpqtId(playAdConfig.getVideoFrontAdId());
         }
-        App.AdConfig woDeAdConfig = ads.get("woDe");
+        AdConfig woDeAdConfig = appAd.get("woDe");
         if(woDeAdConfig!=null){
             demo.getData().getWode().getWxAdId().setYsId(woDeAdConfig.getNativeAdId());
         }
         // demo.getData().getWode().getWxAdId().setCpId("adunit-d73c982ac406d17a");
         // demo.getData().getWode().getWxAdId().setJlspId("adunit-d06d530e38aaba45");
         //demo.getData().getWode().getWxAdId().setSpqtId("adunit-03083c87b390182a");
-        App.AdConfig otherAdConfig = ads.get("other");
+        AdConfig otherAdConfig = appAd.get("other");
         if(otherAdConfig!=null){
             demo.getData().getOther().getWxAdId().setYsId(otherAdConfig.getNativeAdId());
             demo.getData().getOther().getWxAdId().setCpId(otherAdConfig.getInterstitialAdId());
